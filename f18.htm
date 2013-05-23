@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0055)http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+	<meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+	 
+	<title>TEST 12</title>
+	<script type="text/javascript" src="./formatCuTest_files/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="./formatCuTest_files/zebra_dialog.js"></script>
+	<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency-1.4.0.js"></script>
+	<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency.ja-JP.js"></script>	
+
+</head>
+
+<body> 
+<div id="kubun1" class="list-div-td-110" kubun="money" >1720000</div>
+<div id="kubun2" class="list-div-td-110" kubun="money" >88000</div>
+<div id="kubun3" class="list-div-td-110" kubun="money" >1806000</div>
+<!--input type="textbox" kubun="money"  value="1720000" />
+<input type="textbox" kubun="money"  value="88000" /-->	
+<input id="kubun0" type="textbox" kubun="money"  value="1806000" />	
+
+<span class="money">123456789</span>
+<span class="money">12000000000</span>	
+
+<script>
+	$(document).ready(function(){
+		//$("[kubun='money']").html($("[kubun='money']").val());
+		//$('.money').html($('#kubun0').val());
+		$('.money').formatCurrency({useHtml:true});
+		$("[kubun='money']").formatCurrency({ useHtml:true, colorize: true, negativeFormat: '-%s%n', roundToDecimalPlace: 0,region: 'ja-JP' });
+	});
+</script>	
+</body>
+</html>
