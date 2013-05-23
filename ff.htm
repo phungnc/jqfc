@@ -1,0 +1,508 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0055)http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+	<title> TEST FORMAT CURRENCY </title>
+	<script type="text/javascript" src="./formatCuTest_files/jquery-1.7.1.min.js"></script>
+	<!--[if lte IE 8]>
+		
+	<script type="text/javascript" src="/hanbai/hanbai/js/excanvas.min.js"></script>
+	<![endif]-->
+	<script>
+		function getBargainStr(){
+			return "【 値 引 き 】";
+		}
+		function showResult(msg){
+			if(msg != 'undefined' && msg != ''){
+				alert('');
+			}
+		}
+		jQuery( function() {
+		     jQuery( '#jquery-ui-datepicker' ) . datepicker( {
+		         showButtonPanel: true
+		     } );
+		 } );
+	</script>
+
+<script type="text/javascript" src="./formatCuTest_files/yuiloader-dom-event.js"></script>
+<script type="text/javascript" charset="utf-8" src="chrome-extension://cpngackimfmofbokmjmljamhdncknpmg/page_context.js"></script>
+<script id="yui__dyn_1" type="text/javascript" src="./formatCuTest_files/calendar-min.js" charset="utf-8"></script></head>
+
+<body screen_capture_injected="true" chromeextension-color-pick.com="true">
+
+<div class="container">   
+  
+	<div class="logo-labels">
+		<ul>
+			<li class="logout"><a href="http://mboo/hanbai/hanbai/login/logout"><span>Logout</span></a></li>
+		</ul>
+				<ul>
+			<font color="white">yanagi002:k2501</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</ul>
+		<ul>
+			<font color="white">13016:インテリア柳</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</ul>
+			</div>
+    <div class="menu-search">
+		<ul class="sf-js-enabled"> 
+			<li><a href="http://mboo/hanbai/hanbai/Estimate/estimate_list">見積</a></li> 
+			<li><a href="http://mboo/hanbai/hanbai/Earnings/earnings_list">売上</a></li>
+			<li><a href="http://mboo/hanbai/hanbai/Payment/payment_list">入金</a></li>
+			<li><a href="./formatCuTest_files/formatCuTest.htm">仕入</a></li>
+			<li><a href="http://mboo/hanbai/hanbai/Withdrawal/withdrawal_list">支払</a></li>
+			<li><a href="http://mboo/hanbai/hanbai/Stock/stock_inout_detail_list">在庫</a></li>
+			<li><a href="http://mboo/hanbai/hanbai/ManageStatistics/magstac_uriagejyui_tbl">管理統計</a></li>
+			<li><a href="http://mboo/hanbai/hanbai/CustomerStatistics/customerstatistics_search">顧客統計</a></li>
+			<li><a href="http://mboo/hanbai/hanbai/GoodsTori/goods">商品・取引先</a></li>
+			<li><a href="http://mboo/hanbai/hanbai/Master/company">マスタメンテ</a></li>
+		</ul>
+	</div>
+	﻿<div class="breadcrumbs">
+	<ul>
+		<li class="home"><a href="http://mboo/hanbai/hanbai/home"></a></li>
+		<li class="break">»</li>
+		<li><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#">仕入</a></li>
+		<li class="break">»</li>
+		<li><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#">仕入一覧</a></li>
+	</ul>
+</div><h2></h2>
+<a href="http://mboo/hanbai/hanbai/Purchase/purchase_hachu_input" class="button green small"><span>発注伝票入力</span></a>
+<a href="http://mboo/hanbai/hanbai/Purchase/purchase_hachu_list" class="button green small"><span>発注一覧</span></a>
+<a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_input" class="button green small"><span>仕入伝票入力</span></a>
+<a href="./formatCuTest_files/formatCuTest.htm" class="button green small" style="opacity: 1;"><span>仕入一覧</span></a>
+<script type="text/javascript">
+	function confirmDialog(msg, formId) {
+
+	    // show a dialog box when clicking on a link
+	     $.Zebra_Dialog(msg, 
+	     	{
+			    'type':     'question',
+			    'title':    '確認',
+			    'width':	460,
+			    'buttons':  [
+			                    {caption: 'OK', callback: function() { 
+			                    	$("#"+formId).submit();}},
+			                    {caption: 'Cancel', callback: function() { }}
+			                ]
+			}
+		);
+	 }
+	 function confirmDialogWithCallback(msg, method) {
+
+	    // show a dialog box when clicking on a link
+	     $.Zebra_Dialog(msg, 
+	     	{
+			    'type':     'question',
+			    'title':    '確認',
+			    'width':	500,
+			    'buttons':  [
+			                    {caption: 'OK', callback: function() { 
+			                    	method();}},
+			                    {caption: 'Cancel', callback: function() { }}
+			                ]
+			}
+		);
+	 }
+	 function warningDialog(msg) {
+
+	    // show a dialog box when clicking on a link
+	     $.Zebra_Dialog(msg, 
+	     	{
+			    'type':     'warning',
+			    'title':    '警告',
+			    'width':	400,
+			}
+		);
+	 }
+	 function warningDialogWithCallback(msg, method) {
+
+	    // show a dialog box when clicking on a link
+	     $.Zebra_Dialog(msg, 
+	     	{
+			    'type':     'warning',
+			    'title':    '警告',
+			    'width':	400,
+			    'buttons':  [
+			                    {caption: 'OK', callback: function() { 
+			                    	method();}},
+			                ]
+			}
+		);
+	 }
+</script>
+<script>
+	$(document).ready(function(){
+		$("#list").scroll(function(){
+			$("#title").scrollLeft($("#list").scrollLeft());
+		});
+		$("#printDiv").hide();
+		$("#vendorName").attr("readonly","readonly");
+		$("#vendorName").css("background", "rgb(234,234,234)");
+		$("#PayeeNm").attr("readonly","readonly");
+		$("#PayeeNm").css("background", "rgb(234,234,234)");
+		$("[kubun='money']").formatCurrency({ colorize: true, negativeFormat: '-%s%n', roundToDecimalPlace: 0,region: 'ja-JP' });
+	});
+	function doEdit(){
+		var bFound = false;
+		$("input[name='EditSlipNum']").each(function(){
+			if($(this).attr("checked")=='checked'){
+				bFound = true;
+				var value=$(this).attr("value");
+				var myform = $("<form id='editForm' action='purchase_shiire_input' method=post></form>").appendTo("body");
+				$("<input type=hidden name='EditSlipNum'/>").attr("value", value).appendTo("#editForm");
+				$("<input type=hidden name='Edit'/>").attr("value", "Edit").appendTo("#editForm");
+				$("#editForm").submit();
+			}
+		});
+		if(!bFound){
+			warningDialog('編集対象を選択ください！');
+		}
+	}
+	function clearCondition(){
+		$("<form action='purchase_shiire_list' method=post />").appendTo("body").submit();
+	}
+	function doPreview(){
+		$("#printDiv").slideToggle("slow");
+	}
+	function doPreviewPShiire_List_Slip(){
+		$("#searchForm").attr("action","purchase_shiire_list_slip_print").attr("target", "_blank").submit();
+		$("#searchForm").attr("action","").attr("target", "")
+	}
+	function doPreviewPShiire_List_Vendor(){
+		$("#searchForm").attr("action","purchase_shiire_list_vendor_print").attr("target", "_blank").submit();
+		$("#searchForm").attr("action","").attr("target", "")
+	}
+	function doPreviewPShiire_Detail_List_Slip(){
+		$("#searchForm").attr("action","purchase_shiire_detail_list_slip_print").attr("target", "_blank").submit();
+		$("#searchForm").attr("action","").attr("target", "")
+	}
+	function doPreviewPShiire_Detail_List_Vendor(){
+		$("#searchForm").attr("action","purchase_shiire_detail_list_vendor_print").attr("target", "_blank").submit();
+		$("#searchForm").attr("action","").attr("target", "")
+	}
+	function doPreviewPShiire_Detail_List_Goods(){
+		$("#searchForm").attr("action","purchase_shiire_detail_list_goods_print").attr("target", "_blank").submit();
+		$("#searchForm").attr("action","").attr("target", "")
+	}
+</script>
+<input type="hidden" id="left" value="">
+<div class="section" id="cadd">
+	<div class="full">
+		<div class="box">
+			<div class="content forms">
+				<form action="" method="post" id="searchForm">
+				    <div>
+				        <fieldset> <legend><strong>抽出条件</strong></legend>					    
+							<table cellspacing="0" cellpadding="0" border="0" width="100%"> 
+		                       <tfoot>
+		                          <tr height="30"> 
+	                                <td width="10"></td>
+	                                <td width="60"><strong>伝票番号</strong></td>
+	                                <td width="100">
+	                                    <input type="text" value="" name="conSlipNumVal" class="small62">
+	                                </td>
+	                                <td width="90"><strong>仕入日付 　  年</strong></td>
+	                                <td width="60">
+									    <script type="text/javascript">
+	$(document).ready(function(){
+		var tmp = $("#chgComNendo").find("option:[selected='selected']").text();
+		var starD = "年1月1日";
+		var endD = "年12月31日";
+		$("#comNendoSelVal").text(tmp+starD+"～"+tmp+endD);
+		$("#chgComNendo").change(function(){
+			$("#comNendoSelVal").text($(this).val()+starD+"～"+$(this).val()+endD);
+		});
+	});
+</script>
+<select class="small" name="conComNendo" id="chgComNendo" style="display: none;">
+	<option value="">すべて</option>
+			   			<option value="2011">2011</option>
+   		   			   			<option value="2012">2012</option>
+   		   			   			<option value="2013">2013</option>
+   		   			   			<option value="2014">2014</option>
+   		   			   			<option value="2015">2015</option>
+   		   			   			<option value="2016">2016</option>
+   		   			   			<option value="2017">2017</option>
+   		   			   			<option value="2018">2018</option>
+   		   			   			<option value="2019">2019</option>
+   		   			   			<option value="2020">2020</option>
+   		   	</select><a class="ui-selectmenu ui-widget ui-state-default ui-corner-all small ui-selectmenu-dropdown" id="chgComNendo-button" role="button" href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" aria-haspopup="true" aria-owns="chgComNendo-menu"><span class="ui-selectmenu-status">すべて</span><span class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span></a>								    </td>
+								    <td width="30"><strong>&nbsp;&nbsp;&nbsp;&nbsp;月</strong></td>
+									<td colspan="3">
+									  <input type="radio" name="OrderMonth" value="1">1&nbsp;
+										<input type="radio" name="OrderMonth" value="2">2&nbsp;
+										<input type="radio" name="OrderMonth" value="3">3&nbsp;
+										<input type="radio" name="OrderMonth" value="4">4&nbsp;
+										<input type="radio" name="OrderMonth" value="5">5&nbsp;
+										<input type="radio" name="OrderMonth" value="6">6&nbsp;
+										<input type="radio" name="OrderMonth" value="7">7&nbsp;
+										<input type="radio" name="OrderMonth" value="8">8&nbsp;
+										<input type="radio" name="OrderMonth" value="9">9&nbsp;
+										<input type="radio" name="OrderMonth" value="10">10&nbsp;
+										<input type="radio" name="OrderMonth" value="11">11&nbsp;
+										<input type="radio" name="OrderMonth" value="12">12&nbsp;
+										<input type="radio" name="OrderMonth" value="" checked="checked" id="all">すべて&nbsp;
+									</td>
+								  </tr>
+							</tfoot></table><table cellspacing="0" cellpadding="0" border="0" width="100%"> 
+		                       <tfoot>
+								  <tr height="30"> 
+							        <td width="10"></td>
+							        <td width="60"><strong>仕入先名</strong></td>
+							        <td>
+									    <script type="text/javascript">
+
+	function selectShiiresaki(param){
+		if(!param){
+			return;
+		}
+		$("#VendorID").val(param.id);
+		$("#VendorNm").val(param.name);
+		$("#hidVendorNm").val(param.name);
+		$("#PayeeCode").val(param.id);
+		$("#PayeeNm").val(param.name);
+		$("#hidPayeeNm").val(param.name);
+	}
+	
+	function showShiiresakiSelDlg(){
+		var rdm = Math.random() * 999 +1 ;
+		var url = "http://mboo/hanbai/hanbai/Master/vendorsel/" + rdm;
+		$("#vendorSelDiv").load(url).dialog("open");
+	}
+	
+	$(document).ready(function() {
+		$("#vendorSelDiv").dialog({
+			autoOpen: false,
+			height:435,
+			width:600,
+			modal:true,
+			resizable: false,
+			closeOnEscape: false,
+			title:"仕入先選択"
+		});
+	});
+	
+	function checkVendorInput(){
+	    var id = $("#vendorInput").val();
+	    if (id == "") {
+	        $("#vendorName").val("");
+	        $("#hidVendorInputForcheck").val("");
+	    } else {
+	    	var rdm = (Math.random() * 999 +1)*123.991 ;
+		 	$.getJSON("http://mboo/hanbai/hanbai/Master/checkvendorid/" + id + "/" + rdm, 
+		 		'', 
+		 		function(json){
+		 			if(json.length ==0){
+		 			    alert("指定した項目はリストにありません。\n リストから項目を選択するか、リスト項目と同じテキストを入力してください。");
+		 				$("#vendorName").val("");
+	                    $("#hidVendorInputForcheck").val("");
+		 				$("#vendorInput").focus().select();
+		 			} else {
+		 			    $("#vendorName").val(json.name);
+	                    $("#hidVendorInputForcheck").val(id);
+	                    $("#PayeeCode").val(id);
+	                    $("#PayeeNm").val(json.name);
+	                    $("#hidPayeeCodeForcheck").val(id);
+		 			} 
+				});	  
+	    }		
+	}
+	
+</script>
+<div>
+	<input type="text" readonly="readonly" style="text-align:right;background:rgb(234,234,234);" value="" class="small62" id="vendorInput" name="VendorID" size="50" autocomplete="off">
+	<button type="button" onclick="showShiiresakiSelDlg(this);" class="findButton">&nbsp;&nbsp;F&nbsp;&nbsp;</button>
+	<input type="text" class="small260" value="" id="vendorName" name="VendorNm" readonly="readonly" style="background-color: rgb(234, 234, 234); background-position: initial initial; background-repeat: initial initial;">
+    <input type="hidden" id="hidVendorInputForcheck" name="hidVendorInputForcheck" value="">
+</div>
+								    </td>							
+								  </tr>
+							   </tfoot>						
+							</table>
+							<table cellspacing="0" cellpadding="0" border="0" width="100%"> 
+		                       <tfoot>
+								  <tr height="30"> 
+							        <td width="10"></td>
+							        <td width="60"><strong>支払先名</strong></td>
+							        <td colspan="1">
+									    <script type="text/javascript">
+	function showShiharaisakiSelDlg(){	
+		var rdm = Math.random() * 999 +1 ;
+		var url = "http://mboo/hanbai/hanbai/Master/vendorsel2/" + rdm;
+		$("#payeeSelDiv").load(url).dialog("open");
+	}
+	
+	$(document).ready(function() {
+		$("#payeeSelDiv").dialog({
+			autoOpen: false,
+			height:435,
+			width:600,
+			modal:true,
+			resizable: false,
+			closeOnEscape: false,
+			title:"支払先検索"
+		});
+	});
+	function checkPayeeCode(){
+	    var id = $("#PayeeCode").val();
+	    if (id == "") {
+	        $("#PayeeNm").val("");
+	        $("#hidPayeeCodeForcheck").val("");
+	    } else {
+	    	var rdm = (Math.random() * 999 +1)*123.991 ;
+		 	$.getJSON("http://mboo/hanbai/hanbai/Master/checkvendorid/" + id + "/" + rdm, 
+		 		'', 
+		 		function(json){
+		 			if(json.length ==0){
+		 			    alert("指定した項目はリストにありません。\n リストから項目を選択するか、リスト項目と同じテキストを入力してください。");
+		 				$("#PayeeNm").val("");
+	                    $("#hidPayeeCodeForcheck").val("");
+		 				$("#PayeeCode").focus().select();
+		 			} else {
+		 			    $("#PayeeNm").val(json.name);
+	                    $("#hidPayeeCodeForcheck").val(id);
+		 			} 
+				});	  
+	    }		
+	}
+</script>
+<div>
+	<input type="text" readonly="readonly" style="text-align:right;background:rgb(234,234,234);" value="" class="small62" id="PayeeCode" name="PayeeCode" size="50" autocomplete="off">
+	<button type="button" onclick="showShiharaisakiSelDlg(this);" class="findButton">&nbsp;&nbsp;F&nbsp;&nbsp;</button>
+	<input type="text" class="small260" value="" id="PayeeNm" name="PayeeNm" readonly="readonly" style="background-color: rgb(234, 234, 234); background-position: initial initial; background-repeat: initial initial;">
+    <input type="hidden" id="hidPayeeCodeForcheck" name="hidPayeeCodeForcheck" value="">
+</div>
+
+								    </td>
+									<td width="80"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;担当者名&nbsp;&nbsp;</strong></td>
+									<td>
+									    <select class="middle" name="conComPersonnelSel" id="conComPersonnelSel" style="display: none;">
+	<option value="">　</option>
+	</select><a class="ui-selectmenu ui-widget ui-state-default ui-corner-all middle ui-selectmenu-dropdown" id="conComPersonnelSel-button" role="button" href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" aria-haspopup="true" aria-owns="conComPersonnelSel-menu"><span class="ui-selectmenu-status">　</span><span class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span></a>								    </td>
+								  </tr>
+							   </tfoot>						
+							</table>
+						</fieldset>
+					</div>
+					<div align="center">
+					    <button type="submit" id="a" class="button orange small"><span>抽出実行</span></button>
+					    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					    <button type="button" onclick="clearCondition();" class="button red small"><span>抽出解除</span></button>
+					</div>
+				    <div class="list-title-div" id="title">
+						<table cellspacing="0" cellpadding="0" border="0"> 
+							<thead> 
+								<tr> 
+									<th><div class="list-div-td-20"></div></th>
+									<th><div class="list-div-td-80" align="center">伝票番号</div></th>
+									<th><div class="list-div-td-80" align="center">仕入日付</div></th>
+									<th><div class="list-div-td-130" align="center">仕入先名</div></th>
+									<th><div class="list-div-td-130" align="center">支払先名</div></th>
+									<th><div class="list-div-td-110" align="center">税抜合計</div></th>
+									<th><div class="list-div-td-110" align="center">消費税合計</div></th>
+									<th><div class="list-div-td-110" align="center">税込合計</div></th>
+									<th><div class="list-div-td-110" align="center">担当者名</div></th>
+									<th></th>
+								</tr> 
+							</thead> 
+						</table>
+					</div>
+					<div id="list" class="list-mydiv">
+						<table id="resultTable">
+							<tbody> 
+
+																	<tr> 
+										<td><div class="list-div-td-20"><input name="EditSlipNum" id="EditSlipNum" type="radio" value="1"></div></td>
+									    <td><div class="list-div-td-80" align="right">1       </div></td>
+									    <td><div class="list-div-td-80" align="center">2013/05/21     </div></td>
+									    <td><div class="list-div-td-130">ベンダー </div></td>
+									    <td><div class="list-div-td-130">ベンダー       </div></td>
+
+									    <td><div id="kubun1" class="list-div-td-110" kubun="money" align="right" style="color: black;">1720000</div></td>
+									    <td><div id="kubun2" class="list-div-td-110" kubun="money" align="right" style="color: black;">88000</div></td>
+									    <td><div id="kubun3" class="list-div-td-110" kubun="money" align="right" style="color: black;">1806000</div></td>
+
+									    <td><div class="list-div-td-110"></div></td>
+									</tr>
+															</tbody> 
+						</table>
+						<script language="JavaScript">  
+						<!--  
+						    var trs = document.getElementById('resultTable').getElementsByTagName('tr');  
+						    window.onload = function(){  
+							    for( var i=0; i<trs.length; i++ ){  
+							        trs[i].onmousedown = function(){  
+								        tronmousedown(this);  
+								    }  
+							    }  
+						    }  
+						    function tronmousedown(obj){  
+						    	var id = '';
+						        for( var o=0; o<trs.length; o++ ){  
+								     if( trs[o] == obj ){  
+								         trs[o].style.backgroundColor = '#DFEBF2';  
+								         document.getElementsByName("EditSlipNum")[obj.rowIndex].checked = true;
+                                         
+								     } else{  
+								         trs[o].style.backgroundColor = '';  
+								     }
+								 }
+						     }  
+						   //-->  
+						</script>
+					</div>
+					<hr>
+					<div align="right">
+				        <button type="button" onclick="doEdit();" class="button blue small"><span>伝票編集</span></button>
+					    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					    <button type="button" onclick="doPreview();" class="button orange small"><span>印刷</span></button>
+					</div>		
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+	<div class="footer">
+		<div class="split">© Copyright <a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#">website.com</a></div> 
+		<div class="split right">Powered by 販管システム</div> 
+	</div>
+</div>
+<!--script type="text/javascript" src="./formatCuTest_files/superfish.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/supersubs.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/hoverIntent.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.flot.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.graphtable-0.2.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.flot.resize.min.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery-ui.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery-ui-select.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/customInput.jquery.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.dataTables.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.fancybox-1.3.4.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.filestyle.mini.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.treeview.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.tipsy.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.wysiwyg.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/inline.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.calculation.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/FusionCharts.js"></script>
+
+<script type="text/javascript" src="./formatCuTest_files/jquery-barcode-2.0.2.min.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/highcharts.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.validate.min.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/yahho-calendar.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/gcalendar-holidays.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.calculator.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.ui.datepicker-ja.js"></script-->
+<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency-1.4.0.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency.ja-JP.js"></script>	
+<script>
+YahhoCal.loadYUI();
+</script>
+
+ <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable" tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-vendorSelDiv" style="display: none; z-index: 1000; outline: 0px;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-vendorSelDiv">仕入先選択</span><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="vendorSelDiv" style="background-color: rgb(245, 245, 245); background-position: initial initial; background-repeat: initial initial;" class="ui-dialog-content ui-widget-content">
+
+</div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable" tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-payeeSelDiv" style="display: none; z-index: 1000; outline: 0px;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-payeeSelDiv">支払先検索</span><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="payeeSelDiv" style="background-color: rgb(245, 245, 245); background-position: initial initial; background-repeat: initial initial;" class="ui-dialog-content ui-widget-content">
+
+</div></div><div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div><div class="calculator-popup" style="display: none;"></div><ul class="ui-selectmenu-menu ui-widget ui-widget-content ui-corner-bottom small ui-selectmenu-menu-dropdown" aria-hidden="true" role="listbox" aria-labelledby="chgComNendo-button" id="chgComNendo-menu" aria-activedescendant="ui-selectmenu-item-693" style="left: 417.5px; top: 186.1875px;"><li role="presentation" class="ui-selectmenu-item-selected"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="true" id="ui-selectmenu-item-693">すべて</a></li><li role="presentation"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="false">2011</a></li><li role="presentation"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="false">2012</a></li><li role="presentation"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="false">2013</a></li><li role="presentation"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="false">2014</a></li><li role="presentation"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="false">2015</a></li><li role="presentation"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="false">2016</a></li><li role="presentation"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="false">2017</a></li><li role="presentation"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="false">2018</a></li><li role="presentation"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="false">2019</a></li><li role="presentation" class="ui-corner-bottom"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="false">2020</a></li></ul><ul class="ui-selectmenu-menu ui-widget ui-widget-content ui-corner-bottom middle ui-selectmenu-menu-dropdown" aria-hidden="true" role="listbox" aria-labelledby="conComPersonnelSel-button" id="conComPersonnelSel-menu" aria-activedescendant="ui-selectmenu-item-760" style="left: 845.5px; top: 251.1875px;"><li role="presentation" class="ui-corner-bottom ui-selectmenu-item-selected"><a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" tabindex="-1" role="option" aria-selected="true" id="ui-selectmenu-item-760">　</a></li></ul></body></html>
