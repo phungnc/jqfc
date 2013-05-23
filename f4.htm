@@ -60,19 +60,8 @@
 		<div class="box">
 			<div class="content forms">
 				<form action="" method="post" id="searchForm">
-				    <div>
-				        <fieldset> <legend><strong>抽出条件</strong></legend>					    
-							<table cellspacing="0" cellpadding="0" border="0" width="100%"> 
-		                       <tfoot>
-		                          <tr height="30"> 
-	                                <td width="10"></td>
-	                                <td width="60"><strong>伝票番号</strong></td>
-	                                <td width="100">
-	                                    <input type="text" value="" name="conSlipNumVal" class="small62">
-	                                </td>
-	                                <td width="90"><strong>仕入日付 　  年</strong></td>
-	                                <td width="60">
-									    <script type="text/javascript">
+
+<script type="text/javascript">
 	$(document).ready(function(){
 		var tmp = $("#chgComNendo").find("option:[selected='selected']").text();
 		var starD = "年1月1日";
@@ -99,23 +88,7 @@
 	});
 	
 </script>
-<div>
-	<input type="text" readonly="readonly" style="text-align:right;background:rgb(234,234,234);" value="" class="small62" id="vendorInput" name="VendorID" size="50" autocomplete="off">
-	<button type="button" onclick="showShiiresakiSelDlg(this);" class="findButton">&nbsp;&nbsp;F&nbsp;&nbsp;</button>
-	<input type="text" class="small260" value="" id="vendorName" name="VendorNm" readonly="readonly" style="background-color: rgb(234, 234, 234); background-position: initial initial; background-repeat: initial initial;">
-    <input type="hidden" id="hidVendorInputForcheck" name="hidVendorInputForcheck" value="">
-</div>
-								    </td>							
-								  </tr>
-							   </tfoot>						
-							</table>
-							<table cellspacing="0" cellpadding="0" border="0" width="100%"> 
-		                       <tfoot>
-								  <tr height="30"> 
-							        <td width="10"></td>
-							        <td width="60"><strong>支払先名</strong></td>
-							        <td colspan="1">
-									    <script type="text/javascript">
+<script type="text/javascript">
 	function showShiharaisakiSelDlg(){	
 		var rdm = Math.random() * 999 +1 ;
 		var url = "http://mboo/hanbai/hanbai/Master/vendorsel2/" + rdm;
@@ -156,29 +129,7 @@
 	    }		
 	}
 </script>
-<div>
-	<input type="text" readonly="readonly" style="text-align:right;background:rgb(234,234,234);" value="" class="small62" id="PayeeCode" name="PayeeCode" size="50" autocomplete="off">
-	<button type="button" onclick="showShiharaisakiSelDlg(this);" class="findButton">&nbsp;&nbsp;F&nbsp;&nbsp;</button>
-	<input type="text" class="small260" value="" id="PayeeNm" name="PayeeNm" readonly="readonly" style="background-color: rgb(234, 234, 234); background-position: initial initial; background-repeat: initial initial;">
-    <input type="hidden" id="hidPayeeCodeForcheck" name="hidPayeeCodeForcheck" value="">
-</div>
 
-								    </td>
-									<td width="80"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;担当者名&nbsp;&nbsp;</strong></td>
-									<td>
-									    <select class="middle" name="conComPersonnelSel" id="conComPersonnelSel" style="display: none;">
-	<option value="">　</option>
-	</select><a class="ui-selectmenu ui-widget ui-state-default ui-corner-all middle ui-selectmenu-dropdown" id="conComPersonnelSel-button" role="button" href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" aria-haspopup="true" aria-owns="conComPersonnelSel-menu"><span class="ui-selectmenu-status">　</span><span class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span></a>								    </td>
-								  </tr>
-							   </tfoot>						
-							</table>
-						</fieldset>
-					</div>
-					<div align="center">
-					    <button type="submit" id="a" class="button orange small"><span>抽出実行</span></button>
-					    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					    <button type="button" onclick="clearCondition();" class="button red small"><span>抽出解除</span></button>
-					</div>
 				    <div class="list-title-div" id="title">
 						<table cellspacing="0" cellpadding="0" border="0"> 
 							<thead> 
@@ -241,29 +192,13 @@
 						   //-->  
 						</script>
 					</div>
-					<hr>
-					<div align="right">
-				        <button type="button" onclick="doEdit();" class="button blue small"><span>伝票編集</span></button>
-					    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					    <button type="button" onclick="doPreview();" class="button orange small"><span>印刷</span></button>
-					</div>
-					<div align="right" id="printDiv" style="display: none;">
-						印刷する帳票の種類
-						<button type="button" onclick="doPreviewPShiire_List_Slip();" class="button orange small"><span>仕入一覧表（伝票別）</span></button>
-						<button type="button" onclick="doPreviewPShiire_List_Vendor();" class="button orange small"><span>仕入一覧表（仕入先別）</span></button>
-						<button type="button" onclick="doPreviewPShiire_Detail_List_Slip();" class="button green small"><span>仕入明細一覧表（伝票別）</span></button>
-						<button type="button" onclick="doPreviewPShiire_Detail_List_Vendor();" class="button green small"><span>仕入明細一覧表（仕入先別）</span></button>
-						<button type="button" onclick="doPreviewPShiire_Detail_List_Goods();" class="button green small"><span>仕入明細一覧表（商品別）</span></button>
-					</div>			
+
+					<hr>			
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
-	<div class="footer">
-		<div class="split">© Copyright <a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#">website.com</a></div> 
-		<div class="split right">Powered by 販管システム</div> 
-	</div>
 </div>
 <!--script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency-1.4.0.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency.ja-JP.js"></script-->
