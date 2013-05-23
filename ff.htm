@@ -4,6 +4,27 @@
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 	<title> TEST FORMAT CURRENCY </title>
+	<link href="http://mboo/hanbai/hanbai/favicon.ico" type="image/x-icon" rel="icon">
+	<link href="http://mboo/hanbai/hanbai/favicon.ico" type="image/x-icon" rel="shortcut icon">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/style.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/style_text.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/form-buttons.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/link-buttons.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/menu.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/statics.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/messages.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/datatable.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/accordion.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/tabs.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/forms.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/datepicker.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/modalbox.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/jquery.fancybox-1.3.4.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/jquery.treeview.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/wysiwyg.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/wysiwyg.modal.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/wysiwyg-editor.css">
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/zebra_dialog.css">	
 	<script type="text/javascript" src="./formatCuTest_files/jquery-1.7.1.min.js"></script>
 	<!--[if lte IE 8]>
 		
@@ -242,8 +263,8 @@
 										<input type="radio" name="OrderMonth" value="10">10&nbsp;
 										<input type="radio" name="OrderMonth" value="11">11&nbsp;
 										<input type="radio" name="OrderMonth" value="12">12&nbsp;
-										<input type="radio" name="OrderMonth" value="" checked="checked" id="all">すべて&nbsp;
-									</td>
+										   												   											   											    	<input type="radio" name="OrderMonth" value="" checked="checked" id="all">すべて&nbsp;
+										    									</td>
 								  </tr>
 							</tfoot></table><table cellspacing="0" cellpadding="0" border="0" width="100%"> 
 		                       <tfoot>
@@ -457,7 +478,15 @@
 				        <button type="button" onclick="doEdit();" class="button blue small"><span>伝票編集</span></button>
 					    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					    <button type="button" onclick="doPreview();" class="button orange small"><span>印刷</span></button>
-					</div>		
+					</div>
+					<div align="right" id="printDiv" style="display: none;">
+						印刷する帳票の種類
+						<button type="button" onclick="doPreviewPShiire_List_Slip();" class="button orange small"><span>仕入一覧表（伝票別）</span></button>
+						<button type="button" onclick="doPreviewPShiire_List_Vendor();" class="button orange small"><span>仕入一覧表（仕入先別）</span></button>
+						<button type="button" onclick="doPreviewPShiire_Detail_List_Slip();" class="button green small"><span>仕入明細一覧表（伝票別）</span></button>
+						<button type="button" onclick="doPreviewPShiire_Detail_List_Vendor();" class="button green small"><span>仕入明細一覧表（仕入先別）</span></button>
+						<button type="button" onclick="doPreviewPShiire_Detail_List_Goods();" class="button green small"><span>仕入明細一覧表（商品別）</span></button>
+					</div>			
 				</form>
 			</div>
 		</div>
@@ -488,15 +517,15 @@
 <script type="text/javascript" src="./formatCuTest_files/jquery.calculation.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/FusionCharts.js"></script>
 
+<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency-1.4.0.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency.ja-JP.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/jquery-barcode-2.0.2.min.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/highcharts.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/jquery.validate.min.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/yahho-calendar.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/gcalendar-holidays.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/jquery.calculator.js"></script>
-<script type="text/javascript" src="./formatCuTest_files/jquery.ui.datepicker-ja.js"></script>
-<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency-1.4.0.js"></script>
-<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency.ja-JP.js"></script>	
+<script type="text/javascript" src="./formatCuTest_files/jquery.ui.datepicker-ja.js"></script>	
 <script>
 YahhoCal.loadYUI();
 </script>
