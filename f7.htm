@@ -39,5 +39,10 @@
 <div id="kubun1" class="list-div-td-110" kubun="money" >1720000</div>
 <div id="kubun2" class="list-div-td-110" kubun="money" >88000</div>
 <div id="kubun3" class="list-div-td-110" kubun="money" >1806000</div>	
+<script>
+	$(document).ready(function(){
+		$("[kubun='money']").formatCurrency({ colorize: true, negativeFormat: '-%s%n', roundToDecimalPlace: 0,region: 'ja-JP' });
+	});
+</script>	
 </body>
 </html>
