@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
-	<title> TEST FORMAT CURRENCY </title>
+	<meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+	 
+	<title>販管</title>
 	<link href="http://mboo/hanbai/hanbai/favicon.ico" type="image/x-icon" rel="icon">
 	<link href="http://mboo/hanbai/hanbai/favicon.ico" type="image/x-icon" rel="shortcut icon">
 	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/style.css">
@@ -24,8 +26,13 @@
 	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/wysiwyg.css">
 	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/wysiwyg.modal.css">
 	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/wysiwyg-editor.css">
-	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/zebra_dialog.css">	
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/zebra_dialog.css">
+
 	<script type="text/javascript" src="./formatCuTest_files/jquery-1.7.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/zebra_dialog.css">
+	<script type="text/javascript" src="./formatCuTest_files/zebra_dialog.js"></script>
+	<link rel="stylesheet" type="text/css" href="./formatCuTest_files/jquery.calculator.css">	
+	
 	<!--[if lte IE 8]>
 		
 	<script type="text/javascript" src="/hanbai/hanbai/js/excanvas.min.js"></script>
@@ -47,7 +54,11 @@
 	</script>
 
 <script type="text/javascript" src="./formatCuTest_files/yuiloader-dom-event.js"></script>
+<style type="text/css">.gcal-sunday   .ui-state-default { background-image: none; background-color: #f99 } .gcal-saturday .ui-state-default { background-image: none; background-color: #6cf } .ui-widget-content .gcal-holiday { background-image: none; background-color: #f9f }</style>
+<link type="text/css" rel="stylesheet" href="chrome-extension://cpngackimfmofbokmjmljamhdncknpmg/style.css">
 <script type="text/javascript" charset="utf-8" src="chrome-extension://cpngackimfmofbokmjmljamhdncknpmg/page_context.js"></script>
+
+<link id="yui__dyn_0" type="text/css" rel="stylesheet" href="./formatCuTest_files/calendar.css" charset="utf-8">
 <script id="yui__dyn_1" type="text/javascript" src="./formatCuTest_files/calendar-min.js" charset="utf-8"></script></head>
 
 <body screen_capture_injected="true" chromeextension-color-pick.com="true">
@@ -77,6 +88,7 @@
 			<li><a href="http://mboo/hanbai/hanbai/CustomerStatistics/customerstatistics_search">顧客統計</a></li>
 			<li><a href="http://mboo/hanbai/hanbai/GoodsTori/goods">商品・取引先</a></li>
 			<li><a href="http://mboo/hanbai/hanbai/Master/company">マスタメンテ</a></li>
+			<!--<li><a href="http://mboo/hanbai/hanbai/Monupd/month_update">月次更新</a></li>-->
 		</ul>
 	</div>
 	﻿<div class="breadcrumbs">
@@ -163,6 +175,7 @@
 		$("#PayeeNm").attr("readonly","readonly");
 		$("#PayeeNm").css("background", "rgb(234,234,234)");
 		$("[kubun='money']").formatCurrency({ colorize: true, negativeFormat: '-%s%n', roundToDecimalPlace: 0,region: 'ja-JP' });
+		//$("[kubun='money']").formatCurrency();
 	});
 	function doEdit(){
 		var bFound = false;
@@ -251,18 +264,18 @@
    		   	</select><a class="ui-selectmenu ui-widget ui-state-default ui-corner-all small ui-selectmenu-dropdown" id="chgComNendo-button" role="button" href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_list#" aria-haspopup="true" aria-owns="chgComNendo-menu"><span class="ui-selectmenu-status">すべて</span><span class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span></a>								    </td>
 								    <td width="30"><strong>&nbsp;&nbsp;&nbsp;&nbsp;月</strong></td>
 									<td colspan="3">
-									  <input type="radio" name="OrderMonth" value="1">1&nbsp;
-										<input type="radio" name="OrderMonth" value="2">2&nbsp;
-										<input type="radio" name="OrderMonth" value="3">3&nbsp;
-										<input type="radio" name="OrderMonth" value="4">4&nbsp;
-										<input type="radio" name="OrderMonth" value="5">5&nbsp;
-										<input type="radio" name="OrderMonth" value="6">6&nbsp;
-										<input type="radio" name="OrderMonth" value="7">7&nbsp;
-										<input type="radio" name="OrderMonth" value="8">8&nbsp;
-										<input type="radio" name="OrderMonth" value="9">9&nbsp;
-										<input type="radio" name="OrderMonth" value="10">10&nbsp;
-										<input type="radio" name="OrderMonth" value="11">11&nbsp;
-										<input type="radio" name="OrderMonth" value="12">12&nbsp;
+									    																						   			<input type="radio" name="OrderMonth" value="1">1&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="2">2&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="3">3&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="4">4&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="5">5&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="6">6&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="7">7&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="8">8&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="9">9&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="10">10&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="11">11&nbsp;
+										   												   																							   			<input type="radio" name="OrderMonth" value="12">12&nbsp;
 										   												   											   											    	<input type="radio" name="OrderMonth" value="" checked="checked" id="all">すべて&nbsp;
 										    									</td>
 								  </tr>
@@ -497,7 +510,9 @@
 		<div class="split right">Powered by 販管システム</div> 
 	</div>
 </div>
-<script type="text/javascript" src="./formatCuTest_files/superfish.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency-1.4.0.js"></script>
+<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency.ja-JP.js"></script>
+<!--script type="text/javascript" src="./formatCuTest_files/superfish.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/supersubs.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/hoverIntent.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/jquery.flot.js"></script>
@@ -516,16 +531,13 @@
 <script type="text/javascript" src="./formatCuTest_files/inline.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/jquery.calculation.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/FusionCharts.js"></script>
-
-<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency-1.4.0.js"></script>
-<script type="text/javascript" src="./formatCuTest_files/jquery.formatCurrency.ja-JP.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/jquery-barcode-2.0.2.min.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/highcharts.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/jquery.validate.min.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/yahho-calendar.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/gcalendar-holidays.js"></script>
 <script type="text/javascript" src="./formatCuTest_files/jquery.calculator.js"></script>
-<script type="text/javascript" src="./formatCuTest_files/jquery.ui.datepicker-ja.js"></script>	
+<script type="text/javascript" src="./formatCuTest_files/jquery.ui.datepicker-ja.js"></script-->	
 <script>
 YahhoCal.loadYUI();
 </script>
