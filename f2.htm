@@ -105,66 +105,6 @@
 <a href="http://mboo/hanbai/hanbai/Purchase/purchase_hachu_list" class="button green small"><span>発注一覧</span></a>
 <a href="http://mboo/hanbai/hanbai/Purchase/purchase_shiire_input" class="button green small"><span>仕入伝票入力</span></a>
 <a href="./formatCuTest_files/formatCuTest.htm" class="button green small" style="opacity: 1;"><span>仕入一覧</span></a>
-<script type="text/javascript">
-	function confirmDialog(msg, formId) {
-
-	    // show a dialog box when clicking on a link
-	     $.Zebra_Dialog(msg, 
-	     	{
-			    'type':     'question',
-			    'title':    '確認',
-			    'width':	460,
-			    'buttons':  [
-			                    {caption: 'OK', callback: function() { 
-			                    	$("#"+formId).submit();}},
-			                    {caption: 'Cancel', callback: function() { }}
-			                ]
-			}
-		);
-	 }
-	 function confirmDialogWithCallback(msg, method) {
-
-	    // show a dialog box when clicking on a link
-	     $.Zebra_Dialog(msg, 
-	     	{
-			    'type':     'question',
-			    'title':    '確認',
-			    'width':	500,
-			    'buttons':  [
-			                    {caption: 'OK', callback: function() { 
-			                    	method();}},
-			                    {caption: 'Cancel', callback: function() { }}
-			                ]
-			}
-		);
-	 }
-	 function warningDialog(msg) {
-
-	    // show a dialog box when clicking on a link
-	     $.Zebra_Dialog(msg, 
-	     	{
-			    'type':     'warning',
-			    'title':    '警告',
-			    'width':	400,
-			}
-		);
-	 }
-	 function warningDialogWithCallback(msg, method) {
-
-	    // show a dialog box when clicking on a link
-	     $.Zebra_Dialog(msg, 
-	     	{
-			    'type':     'warning',
-			    'title':    '警告',
-			    'width':	400,
-			    'buttons':  [
-			                    {caption: 'OK', callback: function() { 
-			                    	method();}},
-			                ]
-			}
-		);
-	 }
-</script>
 <script>
 	$(document).ready(function(){
 		$("#list").scroll(function(){
