@@ -132,7 +132,7 @@
 				$destination = $(destination);
 			}
 			// set destination
-			$destination[$destination.is('input, select, textarea') ? 'val' : 'html'](money);
+			$destination[$destination.is('input, select, textarea') ? 'val' : 'text'](money);
 
 			if (
 				hasDecimals && 
@@ -164,7 +164,7 @@
 		settings.regex = generateRegex(settings);
 
 		return this.each(function() {
-			var method = $(this).is('input, select, textarea') ? 'val' : 'html';
+			var method = $(this).is('input, select, textarea') ? 'val' : 'text';
 			$(this)[method]($(this)[method]().replace('(', '(-').replace(settings.regex, ''));
 		});
 	};
@@ -185,7 +185,7 @@
 		settings.regex = generateRegex(settings);
 		settings.parseType = validateParseType(settings.parseType);
 
-		var method = $(this).is('input, select, textarea') ? 'val' : 'html';
+		var method = $(this).is('input, select, textarea') ? 'val' : 'text';
 		var num = $(this)[method]();
 		num = num ? num : "";
 		num = num.replace('(', '(-');
