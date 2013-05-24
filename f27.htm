@@ -14,8 +14,8 @@
 
 <body> 
 <div id="kubun1" class="list-div-td-110" kubun="money" >1720000</div>
-<div id="kubun2" class="list-div-td-110" kubun="money" >88000</div>
-<div id="kubun3" class="list-div-td-110" kubun="money" >1806000</div>
+<!--div id="kubun2" class="list-div-td-110" kubun="money" >88000</div>
+<div id="kubun3" class="list-div-td-110" kubun="money" >1806000</div-->
 <!--input type="textbox" kubun="money"  value="1720000" />
 <input type="textbox" kubun="money"  value="88000" /-->	
 <input id="kubun0" type="textbox" kubun="money"  value="1806000" />	
@@ -26,8 +26,8 @@
 <script>
 	$(document).ready(function(){
 		//$("[kubun='money']").html($("[kubun='money']").val());
-		$('.money').html($('#kubun0').val());
-		$('.money').formatCurrency({useHtml:true});
+		//$('.money').html($('#kubun0').val());
+		$('.money').formatCurrency();
 		$("[kubun='money']").formatCurrency({ useHtml:true });
 	});
 </script>	
