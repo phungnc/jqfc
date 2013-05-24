@@ -61,7 +61,7 @@
 
 			// get number
 			var num = '0';
-			num = $this[$this.is('input, select, textarea') ? 'val' : 'html']();
+			num = $this[$this.is('input, select, textarea') ? 'val' : 'text']();
 
 			//identify '(123)' as a negative number
 			if (num.search('\\(') >= 0) {
