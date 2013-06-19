@@ -1,14 +1,15 @@
 /**
- * STC Image Manager - Jquery Plugin
+ *  Image Loader - Jquery Plugin
  * * * OPTION * * *
+ * Author: phungnc@gmail.com
  */
 
 ( function($) {
 		$.fn.stcimgmgr = function(customOptions) {
 			/*** private member ***/
 			var constants = {
-				addBtnTitle : 'Chọn làm hình đại diện',
-				delBtnTitle : 'Xoá'
+				addBtnTitle : 'Select',
+				delBtnTitle : 'Delete'
 			};
 			var $this = this;
 			var options = {
@@ -28,7 +29,7 @@
 					break;
 				case 3:
 					if (arguments[0] != 'options') {
-						$.error('Tham số ' + arguments[0] + 'không đúng');
+						$.error('Argument: ' + arguments[0] + 'not right');
 						return;
 					}
 
@@ -159,14 +160,12 @@
 				$this.data('imgId',imgId);
 				$(img).attr('data-id','img' + imgId);
 				$(imgCtn).addClass('stc-imgctn img-polaroid');
-				$(imgCtn).width(options.imgWidth);
-				$(imgCtn).height(options.imgHeight);
 				$(imgCtn).append(img);
 				
 				var html = '';
-				html += '<i title="Xoá" class="stc-icon-delete"></i>';
-				html += '<i title="Chọn" class="stc-icon-ok-green"></i>';
-				html += '<i title="Bỏ chọn" class="stc-icon-ko-red"></i>';
+				html += '<i title="Delete" class="stc-icon-delete"></i>';
+				html += '<i title="Select" class="stc-icon-ok-green"></i>';
+				html += '<i title="Cancel" class="stc-icon-ko-red"></i>';
 				html += '<div class="stc-img-overlay"></div>';
 				$(imgCtn).append(html);
 				return imgCtn;
@@ -203,9 +202,8 @@ function pinstc(d,inf){
 
 	var doms = {
 		overlay : d.createElement("div"),
-		table : d.createElement("table"),
 		topControl : d.createElement("div"),
-		submit : d.createElement("button"),
+		close : d.createElement("button"),
 		imgMgr : d.createElement("div"),
 		iframe : d.createElement("iframe")
 	};
@@ -213,55 +211,33 @@ function pinstc(d,inf){
 	// Overlay
 	$(doms.overlay).attr("id","stcoverlay");
 	$(doms.overlay).addClass("stc-fixed");
-
-	// Table
-	$(doms.table).attr("id","stc_prd_mng");
-	$(doms.table).addClass("stc-fixed");
-	//$(doms.imgMgr).attr("id","stc_prd_mng");
+	// Img
 	$(doms.imgMgr).addClass("stc-fixed");
 
 	// Top control
 	$(doms.topControl).attr("id","stc_top_control");
 	var linkLogo = d.createElement("a");
-	$(linkLogo).addClass("sotaycuoi");
-	$(linkLogo).attr("href","http://www.sotaycuoi.vn/");
+	//$(linkLogo).addClass("sotaycuoi");
+	$(linkLogo).attr("href","http://a-fis.com/");
 	$(linkLogo).attr("target","_blank");
-	$(linkLogo).append('<img src="http://www.sotaycuoi.vn/assets/images/stc/stclogo.png">');
+	$(linkLogo).append('<img src="https://crowdworks.jp/attachments/217098.png?height=160&width=160">');
 	$(doms.topControl).append(linkLogo);
 
-	$(doms.submit).attr("id","submit_image");
-	$(doms.submit).text("Đóng");
-	$(doms.submit).addClass("stc-button-blue");
-	$(doms.submit).click(function(){
+	$(doms.close).attr("id","close");
+	$(doms.close).text("Close");
+	$(doms.close).addClass("stc-button-blue");
+	$(doms.close).click(function(){
+		$(doms.topControl).remove();
 		$(doms.overlay).remove();
-		$(doms.table).remove();
+		$(doms.imgMgr).remove();
 	});
-	$(doms.topControl).append(doms.submit);
+	$(doms.topControl).append(doms.close);
 
-	var th  = d.createElement("th");
-	$(th).attr("colspan",2);
-	$(th).append(doms.topControl);
-	$(doms.table).append(th);
-
-	var tr = d.createElement("tr"), td1 = d.createElement("td"), td2 = d.createElement("td");
 	$(doms.imgMgr).attr("id","stc_img_mng");
 	$(doms.imgMgr).height($(window).height() - 40 );
-	//$(td1).append(doms.imgMgr); //$(td2).append(doms.iframe);
-	//$(tr).append(td1); //$(tr).append(td2);
-	//$(doms.table).append(tr);
-
-	// Iframe
-	/*
-	$(doms.iframe).attr("src",inf.requestUrl);
-	$(doms.iframe).load(function(event){
-		var added = getURLParameter($(doms.iframe).attr("src"),"added");
-		if(added == "1"){
-			$("#stc_img_mng").stcimgmgr('options','removeChoosedImages','');
-		}
-	});
-	*/
 	// Body
 	$(d.body).append(doms.overlay);
+	$(d.body).append(doms.topControl);
 	$(d.body).append(doms.imgMgr);
 
 	// Image Manager
@@ -339,7 +315,7 @@ function pinstc(d,inf){
 }
 
 pinstc(document,{
-	requestUrl : "http://localhost/bmt/pinstc.php?",
+	//requestUrl : "http://localhost/bmt/pinstc.php?",
 	minWidth : 200,
 	minHeight : 200
 });
