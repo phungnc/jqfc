@@ -1,0 +1,103 @@
+.stc-imgmgr{
+	
+}
+.stc-imgctn{
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	margin: 2px;
+	float: left;
+}
+.stc-imgctn img{
+	width: 100%;
+}
+.stc-imginf{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	font-size: 12px;
+	text-align: center;
+}
+.stc-imginf span{
+	background-color: #FFFFFF;
+	padding: 2px;
+}
+.stc-imgtb{
+	position: absolute;
+	top: -1px;
+	right: 0;
+	display: none;
+	background-color: #DD4465;
+	cursor: pointer;
+}
+
+
+[class^="stc-icons"]{
+	background: url("/assets/images/icons/icons.png") no-repeat scroll transparent;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.stc-img-overlay{
+	display: none;
+	background-color: #000000;
+	opacity: 0.5;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+}
+[class^="stc-icon"]{
+	height: 24px;
+	width: 24px;
+	padding: 6px;
+	cursor: pointer;
+	z-index: 999999;
+}
+.stc-icon-delete{
+	background: url("/assets/images/icons/delete.png") no-repeat scroll transparent;
+}
+.stc-icon-ko-red{
+	background: url("/assets/images/icons/ko_red.png") no-repeat scroll transparent;
+}
+.stc-icon-ok-green{
+	background: url("/assets/images/icons/ok_green.png") no-repeat scroll transparent;
+}
+.stc-imgctn .stc-icon-ok-green,.stc-imgctn .stc-icon-ko-red{
+	position: absolute;
+	left: 45%;
+	top: 45%;
+	display: none;
+}
+.stc-imgctn .stc-icon-delete{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 16px;
+	height: 16px;
+	display: none;
+}
+.stc-imgctn:hover .stc-icon-ok-green,.stc-imgctn:hover .stc-icon-delete{
+	display: block;
+}
+.stc-imgctn-choosed .stc-icon-ok-green{
+	display: block;
+}
+.stc-imgctn-choosed .stc-img-overlay{
+	display: block;
+}
+.stc-imgctn-choosed:hover .stc-icon-ok-green{
+	display: none;
+}
+.stc-imgctn-choosed:hover .stc-icon-ko-red{
+	display: block;
+}
+.stc-imgctn-choosed:hover .stc-icon-delete{
+	display: none;
+}
+
+
+
+
