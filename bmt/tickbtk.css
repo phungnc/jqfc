@@ -46,7 +46,8 @@
   border-style: solid;
   border-width: 1px;
   cursor: pointer;
-  font-family: inherit;
+  /*font-family: inherit;*/
+  font-family: helvetica,arial !important;
   font-weight: bold;
   line-height: 1;
   position: relative;
@@ -54,7 +55,10 @@
   text-align: center;
   display: inline-block;
   float: right;
-  margin: 5px 20px 0 0;
+  /*margin: 5px 20px 0 0;*/
+position: absolute;
+right: 10px;
+top: 10px;  
 }
 #bouticks_header #close:hover{
   -moz-transition: background-position 0.1s linear 0s;
