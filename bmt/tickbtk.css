@@ -126,7 +126,7 @@
 }
 .bouticks-image-container:hover .bouticks-image-choice {
   display: block;
-  background-image: url(http://localhost/bmt/tick.png);
+  background-image: url(https://raw.github.com/phungnc/misc/gh-pages/bmt/tick.png);
 }
 .bouticks-image-choice span {
   color: #fff;
