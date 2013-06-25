@@ -54,7 +54,7 @@
   text-align: center;
   display: inline-block;
   float: right;
-  margin: 10px 20px 0 0;
+  margin: 5px 20px 0 0;
 }
 #bouticks_header #close:hover{
   -moz-transition: background-position 0.1s linear 0s;
