@@ -10,7 +10,7 @@ $(function() {
 
     //if (!eventListeners) addEventListeners();
     $(window).on('load', function () {
-      $('#slideDoor').css('webkitTransform','translate3d(-282px,0,0)');
+      $('#slideDoor').css('webkitTransform','translate3d(' + (0 - $('#slideDoor').width()) + 'px,0,0)');
       new FingerBlast('#mobile-content'); 
     });
 
@@ -105,7 +105,7 @@ $(function() {
 
         if(e.target.id === "slideDoorClose") {
           slider.style['-webkit-transition-duration'] = '.2s';
-          slider.style.webkitTransform = 'translate3d(-282px,0,0)';
+          slider.style.webkitTransform = 'translate3d(' + (0-sliderWidth) + 'px,0,0)';
           return;
         }
 
@@ -166,17 +166,16 @@ $(function() {
   <style type="text/css">
     #slideDoor {
       position: relative;
-      width: 280px;
+      width: 90%;
       border: 1px solid #999;
       left: -8px;    
     }
     #slideDoorOpen {
       position: absolute;
-      width: 30px;
-      height: 60px;
+      width: 12%;
+      height: 30%;
       top: 45px;
-      right: -32px;
-      border:1px solid #999;
+      right: -12%;
       background-color: #999;
       cursor: pointer;
     }
