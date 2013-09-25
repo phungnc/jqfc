@@ -2,6 +2,59 @@
   <head>
     <meta charset="utf-8">
     <title>SlideOut</title>
+      <style type="text/css">
+    #slideDoor {
+      position: fixed;
+      width: 100%;
+      border: 1px solid #999;
+      left: -1px;
+      max-height: 100%;
+      background-color: #fff; 
+      top: 10%;          
+    }
+    #slideDoorOpen {
+      position: absolute;
+      width: 12%;
+      height: 30%;
+      top: 45px;
+      right: -12%;
+      background-color: #999;
+      cursor: pointer;
+      text-align: center;
+      line-height: 150PX;
+      font-size: 60px;
+      color: white;
+    }
+    #slideDoorClose {
+      position: absolute;
+      border: none;
+      top: 3px;
+      right: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      padding: 0;
+      font-size: 80px;
+      background-color: red;
+    }
+    #slideDoorContent {
+      overflow-y: auto;
+      max-height: 500px;
+    }
+    #title {
+      line-height: 100px;
+      text-align: center;
+      background-color: #36231C;
+      color: white;
+      font-size: 50px;      
+    }
+    #slideDoorContent ul li {
+      line-height: 50px;
+      font-size: 18px;
+    }
+    .modal-open {
+      overflow: hidden;
+    }
+  </style>
 <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="fingerblast.js"></script>
 <script type="text/javascript">
@@ -108,57 +161,7 @@ $(function() {
 
 </script>
   </head>
-  <body>
-  <style type="text/css">
-    #slideDoor {
-      position: fixed;
-      width: 100%;
-      border: 1px solid #999;
-      left: -1px;
-      max-height: 100%;
-      background-color: #fff; 
-      top: 10%;          
-    }
-    #slideDoorOpen {
-      position: absolute;
-      width: 12%;
-      height: 30%;
-      top: 45px;
-      right: -12%;
-      background-color: #999;
-      cursor: pointer;
-      text-align: center;
-      line-height: 150PX;
-      font-size: 60px;
-      color: white;
-    }
-    #slideDoorClose {
-      position: absolute;
-      border: none;
-      top: 3px;
-      right: 3px;
-      overflow: hidden;
-      cursor: pointer;
-      padding: 0;
-      font-size: 80px;
-      background-color: red;
-    }
-    #slideDoorContent {
-      overflow-y: auto;
-      max-height: 500px;
-    }
-    #title {
-      line-height: 100px;
-      text-align: center;
-      background-color: #36231C;
-      color: white;
-      font-size: 50px;      
-    }
-    #slideDoorContent ul li {
-      line-height: 50px;
-      font-size: 18px;
-    }
-  </style>
+  <body class="modal-open">
   <div id="mobile-content">
     <div id="slideDoor">
       <div id="slideDoorOpen">>></div>
