@@ -6,160 +6,106 @@
 <script type="text/javascript" src="fingerblast.js"></script>
 <script type="text/javascript">
 
-$(function() {
+var Slider = function (selector, options) {
+  // body...
+  // check for correct selector 
+  if(typeof selector === 'undefined') return;
+  //
+  //if(!(selector.nodeType)){
+  //  if($$(selector).length === 0) return;
+  //}
+  // default options
+  //var defaults = {};
 
-    //if (!eventListeners) addEventListeners();
+  //options = options || {};
+  //
+  var pageX;
+  var pageY;
+  var slider;
+  var deltaX;
+  var deltaY;
+  var offsetX;
+  var startTime;
+  var resistance;
+  var sliderWidth;
+  var toggleFlag;
+  //
+  var getSlider = function (target) {
+    var i, sliders = document.querySelectorAll(selector);
+    for (; target && target !== document; target = target.parentNode) {
+      for (i = sliders.length; i--;) { if (sliders[i] === target) return target; }
+    }
+  }
+
+  var getScroll = function () {
+    var translate3d = slider.style.webkitTransform.match(/translate3d\(([^,]*)/);
+    return parseInt(translate3d ? translate3d[1] : 0)
+  };
+
+  var toggleSlide = function () {
+    toggleFlag = Math.round(getScroll() / sliderWidth );
+    toggleFlag = toggleFlag > 0 ? 0 : (toggleFlag < -1 ? -1 : toggleFlag);     
+  }
+
+  var onTouchStart = function (e) {
+    slider = getSlider(e.target);
+    if (!slider) return;
+    sliderWidth    = slider.offsetWidth;
+    resistance     = 1;    
+    startTime      = +new Date;
+    pageX          = e.touches[0].pageX;
+    pageY          = e.touches[0].pageY;
+    slider.style['-webkit-transition-duration'] = 0;
+  };
+
+  var onTouchMove = function (e) {
+    if (e.touches.length > 1 || !slider) return; // Exit if a pinch || no slider
+    deltaX = e.touches[0].pageX - pageX;
+    deltaY = e.touches[0].pageY - pageY;
+    pageX  = e.touches[0].pageX;
+    pageY  = e.touches[0].pageY;
+    offsetX = (deltaX / resistance) + getScroll();
+    e.preventDefault();
+    resistance = toggleFlag == 0         && deltaX > 0 ? (pageX / sliderWidth) + 1.5 :
+                 toggleFlag == -1 && deltaX < 0 ? (Math.abs(pageX) / sliderWidth) + 1.25 : 1;
+    console.log('resistance after: ' + resistance);
+    slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+  };
+
+  var onTouchEnd = function (e) {
+    if (!slider) return;
+
+    if(e.target.id === "slideDoorClose") {
+      slider.style['-webkit-transition-duration'] = '.2s';
+      slider.style.webkitTransform = 'translate3d(' + (0-sliderWidth) + 'px,0,0)';
+      return;
+    }
+    toggleSlide();
+    offsetX = toggleFlag * sliderWidth;
+    slider.style['-webkit-transition-duration'] = '.2s';
+    slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+    e = new CustomEvent('slide', {
+      detail: { toggleFlag: Math.abs(toggleFlag) },
+      bubbles: true,
+      cancelable: true
+    });
+
+    slider.parentNode.dispatchEvent(e);
+  };
+
+  window.addEventListener('touchstart', onTouchStart);
+  window.addEventListener('touchmove', onTouchMove);
+  window.addEventListener('touchend', onTouchEnd);
+}
+
+$(function() {
+    $('#slideDoor').css('webkitTransform','translate3d(' + (0 - $('#slideDoor').width()) + 'px,0,0)');
     $(window).on('load', function () {
-      $('#slideDoor').css('webkitTransform','translate3d(' + (0 - $('#slideDoor').width()) + 'px,0,0)');
       new FingerBlast('#mobile-content'); 
     });
-
-    !function () {
-
-      var pageX;
-      var pageY;
-      var slider;
-      var deltaX;
-      var deltaY;
-      var offsetX;
-      var lastSlide;
-      var startTime;
-      var resistance;
-      var sliderWidth;
-      var slideNumber;
-      var isScrolling;
-      var scrollableArea;
-      var dragableArea;
-
-      var getSlider = function (target) {
-        var i, sliders = document.querySelectorAll('#slideDoor');
-        for (; target && target !== document; target = target.parentNode) {
-          for (i = sliders.length; i--;) { if (sliders[i] === target) return target; }
-        }
-      }
-
-      var getScroll = function () {
-        var translate3d = slider.style.webkitTransform.match(/translate3d\(([^,]*)/);
-        return parseInt(translate3d ? translate3d[1] : 0)
-      };
-
-      var setSlideNumber = function (offset) {
-        var round = offset ? (deltaX < 0 ? 'ceil' : 'floor') : 'round';
-        slideNumber = Math[round](getScroll() / ( scrollableArea / slider.children.length) );
-        slideNumber += offset;
-        slideNumber = Math.min(slideNumber, 0);
-        slideNumber = Math.max(-(slider.children.length - 1), slideNumber);
-      }
-
-      var onTouchStart = function (e) {
-        //console.log("Touch Start");
-        slider = getSlider(e.target);
-
-        if (!slider) return;
-        var firstItem  = slider.querySelector('li');
-        dragableArea   = slider;
-        scrollableArea = firstItem.offsetWidth * slider.children.length;
-        isScrolling    = undefined;
-        sliderWidth    = slider.offsetWidth;
-        resistance     = 1;
-        lastSlide      = -(slider.children.length - 1);
-        startTime      = +new Date;
-        pageX          = e.touches[0].pageX;
-        pageY          = e.touches[0].pageY;
-
-        //setSlideNumber(0);
-
-        slider.style['-webkit-transition-duration'] = 0;
-      };
-
-      var onTouchMove = function (e) {
-        //console.log("Touch Move");
-        if (e.touches.length > 1 || !slider) return; // Exit if a pinch || no slider
-
-
-
-        deltaX = e.touches[0].pageX - pageX;
-        deltaY = e.touches[0].pageY - pageY;
-        pageX  = e.touches[0].pageX;
-        pageY  = e.touches[0].pageY;
-
-        if (typeof isScrolling == 'undefined') {
-          isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
-        }
-
-        if (isScrolling) return;
-
-        offsetX = (deltaX / resistance) + getScroll();
-
-        e.preventDefault();
-
-        resistance = slideNumber == 0         && deltaX > 0 ? (pageX / sliderWidth) + 1.25 :
-                     slideNumber == lastSlide && deltaX < 0 ? (Math.abs(pageX) / sliderWidth) + 1.25 : 1;
-
-        slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
-      };
-
-      var onTouchEnd = function (e) {
-        //console.log("Touch End");
-        if (!slider || isScrolling) return;
-
-        if(e.target.id === "slideDoorClose") {
-          slider.style['-webkit-transition-duration'] = '.2s';
-          slider.style.webkitTransform = 'translate3d(' + (0-sliderWidth) + 'px,0,0)';
-          return;
-        }
-
-
-        setSlideNumber(
-          (+new Date) - startTime < 1000 && Math.abs(deltaX) > 15 ? (deltaX < 0 ? -1 : 1) : 0
-        );
-        //console.log(slideNumber);
-        slideNumber = slideNumber < -1 ? -1 : slideNumber; 
-        offsetX = slideNumber * sliderWidth;
-        //offsetX =  sliderWidth;
-
-        slider.style['-webkit-transition-duration'] = '.2s';
-        slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
-
-
-
-
-        e = new CustomEvent('slide', {
-          detail: { slideNumber: Math.abs(slideNumber) },
-          bubbles: true,
-          cancelable: true
-        });
-
-        slider.parentNode.dispatchEvent(e);
-      };
-
-      window.addEventListener('touchstart', onTouchStart);
-      window.addEventListener('touchmove', onTouchMove);
-      window.addEventListener('touchend', onTouchEnd);
-
-    }();
+    var mySlider = new Slider('#slideDoor');
 });
-/*
-    jQuery(function ($) {
 
-      //$("#Label1").addClass('nrelate_animate_style_nyt flyLabel');
-
-      $("#slideDoorClose").live("click", function () {
-        $("#slideDoor").stop().animate({
-          // parameter
-          "left": "-290px"
-        });
-      });
-
-      $("#slideDoorOpen").live("click", function () {
-        $("#slideDoor").stop().animate({
-          // parameter
-          "left": "-8px"
-        });
-      });
-
-    });
-*/
 </script>
   </head>
   <body>
@@ -168,7 +114,7 @@ $(function() {
       position: relative;
       width: 90%;
       border: 1px solid #999;
-      left: -8px;    
+      left: -8px;
     }
     #slideDoorOpen {
       position: absolute;
