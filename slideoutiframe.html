@@ -1,0 +1,314 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SlideOut</title>
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="fingerblast.js"></script>
+<script type="text/javascript">
+
+var Slider = function (selector, options) {
+  // body...
+  // check for correct selector 
+  if(typeof selector === 'undefined') return;
+  //
+  //if(!(selector.nodeType)){
+  //  if($$(selector).length === 0) return;
+  //}
+  // default options
+  //var defaults = {};
+
+  //options = options || {};
+  //
+  var pageX;
+  var pageY;
+  var slider;
+  var deltaX;
+  var deltaY;
+  var offsetX;
+  var startTime;
+  var resistance;
+  var sliderWidth;
+  var toggleFlag;
+  //
+  var getSlider = function (target) {
+    var i, sliders = document.querySelectorAll(selector);
+    for (; target && target !== document; target = target.parentNode) {
+      for (i = sliders.length; i--;) { if (sliders[i] === target) return target; }
+    }
+  }
+
+  var getScroll = function () {
+    var translate3d = slider.style.webkitTransform.match(/translate3d\(([^,]*)/);
+    return parseInt(translate3d ? translate3d[1] : 0)
+  };
+
+  var toggleSlide = function () {
+    toggleFlag = Math.round(getScroll() / sliderWidth );
+    toggleFlag = toggleFlag > 0 ? 0 : (toggleFlag < -1 ? -1 : toggleFlag);     
+  }
+
+  var onTouchStart = function (e) {
+    slider = getSlider(e.target);
+    if (!slider) return;
+    sliderWidth    = slider.offsetWidth;
+    resistance     = 1;    
+    startTime      = +new Date;
+    pageX          = e.touches[0].pageX;
+    pageY          = e.touches[0].pageY;
+    slider.style['-webkit-transition-duration'] = 0;
+  };
+
+  var onTouchMove = function (e) {
+    if (e.touches.length > 1 || !slider) return; // Exit if a pinch || no slider
+    deltaX = e.touches[0].pageX - pageX;
+    deltaY = e.touches[0].pageY - pageY;
+    pageX  = e.touches[0].pageX;
+    pageY  = e.touches[0].pageY;
+    offsetX = (deltaX / resistance) + getScroll();
+    e.preventDefault();
+    resistance = toggleFlag == 0         && deltaX > 0 ? (pageX / sliderWidth) + 1.5 :
+                 toggleFlag == -1 && deltaX < 0 ? (Math.abs(pageX) / sliderWidth) + 1.25 : 1;
+    console.log('resistance after: ' + resistance);
+    slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+  };
+
+  var onTouchEnd = function (e) {
+    if (!slider) return;
+
+    if(e.target.id === "slideDoorClose") {
+      slider.style['-webkit-transition-duration'] = '.2s';
+      slider.style.webkitTransform = 'translate3d(' + (0-sliderWidth) + 'px,0,0)';
+      return;
+    }
+    toggleSlide();
+    offsetX = toggleFlag * sliderWidth;
+    slider.style['-webkit-transition-duration'] = '.2s';
+    slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+    e = new CustomEvent('slide', {
+      detail: { toggleFlag: Math.abs(toggleFlag) },
+      bubbles: true,
+      cancelable: true
+    });
+
+    slider.parentNode.dispatchEvent(e);
+  };
+
+  window.addEventListener('touchstart', onTouchStart);
+  window.addEventListener('touchmove', onTouchMove);
+  window.addEventListener('touchend', onTouchEnd);
+}
+
+$(function() {
+    $('#slideDoor').css('webkitTransform','translate3d(' + (0 - $('#slideDoor').width()) + 'px,0,0)');
+    $(window).on('load', function () {
+      new FingerBlast('#mobile-content'); 
+    });
+    var mySlider = new Slider('#slideDoor');
+});
+
+</script>
+  </head>
+  <body>
+  <style type="text/css">
+    #slideDoor {
+      position: fixed;
+      width: 100%;
+      border: 1px solid #999;
+      left: -1px;
+      max-height: 100%;
+      background-color: #fff; 
+      top: 10%;          
+    }
+    #slideDoorOpen {
+      position: absolute;
+      width: 12%;
+      height: 30%;
+      top: 45px;
+      right: -12%;
+      background-color: #999;
+      cursor: pointer;
+      text-align: center;
+      line-height: 150PX;
+      font-size: 60px;
+      color: white;
+    }
+    #slideDoorClose {
+      position: absolute;
+      border: none;
+      top: 3px;
+      right: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      padding: 0;
+      font-size: 80px;
+      background-color: red;
+    }
+    #slideDoorContent {
+    }
+    #title {
+      line-height: 100px;
+      text-align: center;
+      background-color: #36231C;
+      color: white;
+      font-size: 50px;      
+    }
+    #slideDoorContent ul li {
+      line-height: 50px;
+      font-size: 18px;
+    }
+  </style>
+  <div id="mobile-content">
+    <div id="slideDoor">
+          <div id="slideDoorOpen">>></div>
+      <div id="title">お知らせ</div>
+      <div id="slideDoorClose">[X]</div>
+        <html>
+          <head>
+          </head>
+          <body>
+            <div id="slideDoorContent">
+              <iframe src="list.html" width="100%" height="100%"></iframe>
+            </div>
+          </body>
+        </html>
+    </div>
+    <div id="mainContent">
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+        Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod.
+
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+        Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.        
+      </p>            
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+        Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod.
+
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+        Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.        
+      </p> 
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+        Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod.
+
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+        Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.        
+      </p> 
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+        Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod.
+
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+        Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.        
+      </p> 
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+        Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod.
+
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+        Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.        
+      </p>                   
+    </div>
+  </div>
+  </body>
+</html>
