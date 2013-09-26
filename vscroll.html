@@ -10,7 +10,7 @@
       border: 1px solid #999;
       left: -1px;
       max-height: 100%;
-      background-color: #fff; 
+      background-color: #ccc; 
       top: 15%;          
     }
     #slideDoorOpen {
@@ -37,10 +37,10 @@
       font-size: 40px;
       background-color: red;
     }
+    #slideWrapper {}
     #slideDoorContent {
-      overflow-y: hidden;
-      max-height: 90%;
-
+      overflow: hidden;
+      bottom: 20px;
     }
     #title {
       line-height: 100px;
@@ -171,10 +171,10 @@ $(function() {
         console.log('slideNumber 1: ' + slideNumber);
         slideNumber += offset;
         console.log('slideNumber 2: ' + slideNumber);
-        //slideNumber = Math.min(slideNumber, 0);
+        slideNumber = Math.min(slideNumber, 0);
         //console.log('slideNumber 3: ' + slideNumber);
-        //slideNumber = Math.max(-(slider.children.length - 1), slideNumber);
-        //console.log('slideNumber 4: ' + slideNumber);
+        slideNumber = Math.max(-(slider.children.length - 1), slideNumber);
+        console.log('slideNumber 4: ' + slideNumber);
       }
       var toggleSlide = function () {
         toggleFlag = Math.round(getScrollX() / sliderWidth );
@@ -183,8 +183,9 @@ $(function() {
       }
       var onTouchStart = function (e) {
         //console.log("Touch Start");
-        slider = getSlider(e.target);
-        sliderX = getSliderX(e.target);
+        var el = e.target ? e.target.nodeType === 3 ? e.target.parentNode : e.target : e.srcElement;
+        slider = getSlider(el);
+        sliderX = getSliderX(el);
 
         if (!slider && !sliderX) return;
 
@@ -262,6 +263,7 @@ $(function() {
 
         //slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
         //slider.style.webkitTransform = 'translate3d(0px,' + offsetY + 'px,0px)';
+        console.log('resistance: ' + resistance);
       };
 
       var onTouchEnd = function (e) {
@@ -273,7 +275,7 @@ $(function() {
           sliderX.style.webkitTransform = 'translate(' + (0-sliderWidth) + 'px,0px)' + ' translateZ(0)';
           return;
         }
-        console.log('isScrolling: '+ isScrolling);
+        //console.log('isScrolling: '+ isScrolling);
         if(isScrolling) {
           setSlideNumber(
             //(+new Date) - startTime < 1000 && Math.abs(deltaX) > 15 ? (deltaX < 0 ? -1 : 1) : 0
@@ -341,169 +343,171 @@ $(function() {
       <div id="slideDoorOpen">>></div>
       <div id="title">お知らせ</div>
       <div id="slideDoorClose">[X]</div>
-      <div id="slideDoorContent">
-          <ul>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/2PM">2PM</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AAA">AAA</a>
-            <span dir="ltr">(2)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Acid%20Black%20Cherry">Acid Black Cherry</a>
-            <span dir="ltr">(3)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AI">AI</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AK-69">AK-69</a>
-            <span dir="ltr">(10)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AKB48">AKB48</a>
-            <span dir="ltr">(13)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Angela%20Aki">Angela Aki</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Arashi">Arashi</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka">Ayaka</a>
-            <span dir="ltr">(7)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka%20Hirahara">Ayaka Hirahara</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BENNIE%20K">BENNIE K</a>
-            <span dir="ltr">(2)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BIGBANG">BIGBANG</a>
-            <span dir="ltr">(13)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BUMP%20OF%20CHICKEN">BUMP OF CHICKEN</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Che%27Nelle">Che'Nelle</a>
-            <span dir="ltr">(2)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/CHEHON">CHEHON</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Chihiro%20Onitsuka">Chihiro Onitsuka</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Dreams%20Come%20True">Dreams Come True</a>
-            <span dir="ltr">(2)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/ET-KING">ET-KING</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/EXILE">EXILE</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Fukuyama%20Masaharu">Fukuyama Masaharu</a>
-            <span dir="ltr">(2)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/2PM">2PM</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AAA">AAA</a>
-            <span dir="ltr">(2)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Acid%20Black%20Cherry">Acid Black Cherry</a>
-            <span dir="ltr">(3)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AI">AI</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AK-69">AK-69</a>
-            <span dir="ltr">(10)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AKB48">AKB48</a>
-            <span dir="ltr">(13)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Angela%20Aki">Angela Aki</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Arashi">Arashi</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka">Ayaka</a>
-            <span dir="ltr">(7)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka%20Hirahara">Ayaka Hirahara</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BENNIE%20K">BENNIE K</a>
-            <span dir="ltr">(2)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BIGBANG">BIGBANG</a>
-            <span dir="ltr">(13)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BUMP%20OF%20CHICKEN">BUMP OF CHICKEN</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Che%27Nelle">Che'Nelle</a>
-            <span dir="ltr">(2)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/CHEHON">CHEHON</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Chihiro%20Onitsuka">Chihiro Onitsuka</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Dreams%20Come%20True">Dreams Come True</a>
-            <span dir="ltr">(2)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/ET-KING">ET-KING</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/EXILE">EXILE</a>
-            <span dir="ltr">(1)</span>
-            </li>
-            <li>
-            <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Fukuyama%20Masaharu">Fukuyama Masaharu</a>
-            <span dir="ltr">(2)</span>
-            </li>          
-          </ul>      
+      <div id="slideWrapper">
+        <div id="slideDoorContent">
+            <ul>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/2PM">2PM</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AAA">AAA</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Acid%20Black%20Cherry">Acid Black Cherry</a>
+              <span dir="ltr">(3)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AI">AI</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AK-69">AK-69</a>
+              <span dir="ltr">(10)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AKB48">AKB48</a>
+              <span dir="ltr">(13)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Angela%20Aki">Angela Aki</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Arashi">Arashi</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka">Ayaka</a>
+              <span dir="ltr">(7)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka%20Hirahara">Ayaka Hirahara</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BENNIE%20K">BENNIE K</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BIGBANG">BIGBANG</a>
+              <span dir="ltr">(13)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BUMP%20OF%20CHICKEN">BUMP OF CHICKEN</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Che%27Nelle">Che'Nelle</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/CHEHON">CHEHON</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Chihiro%20Onitsuka">Chihiro Onitsuka</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Dreams%20Come%20True">Dreams Come True</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/ET-KING">ET-KING</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/EXILE">EXILE</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Fukuyama%20Masaharu">Fukuyama Masaharu</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/2PM">2PM</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AAA">AAA</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Acid%20Black%20Cherry">Acid Black Cherry</a>
+              <span dir="ltr">(3)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AI">AI</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AK-69">AK-69</a>
+              <span dir="ltr">(10)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AKB48">AKB48</a>
+              <span dir="ltr">(13)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Angela%20Aki">Angela Aki</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Arashi">Arashi</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka">Ayaka</a>
+              <span dir="ltr">(7)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka%20Hirahara">Ayaka Hirahara</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BENNIE%20K">BENNIE K</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BIGBANG">BIGBANG</a>
+              <span dir="ltr">(13)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BUMP%20OF%20CHICKEN">BUMP OF CHICKEN</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Che%27Nelle">Che'Nelle</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/CHEHON">CHEHON</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Chihiro%20Onitsuka">Chihiro Onitsuka</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Dreams%20Come%20True">Dreams Come True</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/ET-KING">ET-KING</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/EXILE">EXILE</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Fukuyama%20Masaharu">Fukuyama Masaharu</a>
+              <span dir="ltr">(2)</span>
+              </li>          
+            </ul>      
+        </div>
       </div>
     </div>
     <div id="mainContent">
