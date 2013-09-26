@@ -1,6 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta content="width=device-width, minimum-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>SlideOut</title>
   <style type="text/css">
     #slideDoor {
@@ -48,12 +49,44 @@
       color: white;
       font-size: 50px;      
     }
-    #slideDoorContent ul li {
-      line-height: 50px;
-      font-size: 18px;
-      list-style: none;
-      border-bottom: 1px solid #ddd;
+    #slideDoorContent {
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      width: 100%;
+      -webkit-transform: translateZ(0);
+      -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      -o-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-text-size-adjust: none;
+      -moz-text-size-adjust: none;
+      -ms-text-size-adjust: none;
+      -o-text-size-adjust: none;
+      text-size-adjust: none;
+
     }
+    #slideDoorContent ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      text-align: left;
+    }
+
+    #slideDoorContent ul li {
+      padding: 0 10px;
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 1px solid #ccc;
+      border-top: 1px solid #fff;
+      background-color: #fafafa;
+      font-size: 14px;
+    }
+
     .modal-open {
       overflow: hidden;
     }
@@ -65,7 +98,12 @@
 $(function() {
 
     //if (!eventListeners) addEventListeners();
-    $('#slideDoor').css('webkitTransform','translate3d(' + (0 - $('#slideDoor').width()) + 'px,0px,0px)');
+    $('#slideDoor').css('transform','translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)');
+    $('#slideDoor').css('webkitTransform','translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)');
+    $('#slideDoor').css('MozTransform','translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)');
+    $('#slideDoor').css('msTransform','translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)');
+    $('#slideDoor').css('OTransform','translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)');
+
     $(window).on('load', function () {
       
       new FingerBlast('#mobile-content'); 
@@ -185,10 +223,21 @@ $(function() {
         //if (isScrolling) return;
         if (isScrolling) {
           offsetY = (deltaY / resistance) + getScroll();
-          slider.style.webkitTransform = 'translate3d(0px,' + offsetY + 'px,0px)';                    
+          //slider.style.webkitTransform = 'translate3d(0px,' + offsetY + 'px,0px)';   
+          slider.style.transform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          slider.style.webkitTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          slider.style.MozTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          slider.style.msTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          slider.style.OTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)'; 
+
         } else {
           offsetX = (deltaX / resistance) + getScrollX();
-          sliderX.style.webkitTransform = 'translate3d(' + offsetX + 'px,0px,0px)';          
+          //sliderX.style.webkitTransform = 'translate3d(' + offsetX + 'px,0px,0px)';
+          sliderX.style.transform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          sliderX.style.webkitTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          sliderX.style.MozTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          sliderX.style.msTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          sliderX.style.OTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                     
         }
         //console.log('offsetY: '+ offsetY);
         e.preventDefault();
@@ -236,7 +285,14 @@ $(function() {
         //slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
         if(isScrolling) {
           slider.style['-webkit-transition-duration'] = '.2s';
-          slider.style.webkitTransform = 'translate3d(0px,' + offsetY + 'px,0px)';
+          //slider.style.webkitTransform = 'translate3d(0px,' + offsetY + 'px,0px)';
+
+          slider.style.transform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          slider.style.webkitTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          slider.style.MozTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          slider.style.msTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          slider.style.OTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                
+
           e = new CustomEvent('slide', {
             detail: { slideNumber: Math.abs(slideNumber) },
             bubbles: true,
@@ -245,7 +301,12 @@ $(function() {
           slider.parentNode.dispatchEvent(e);
         } else {
           sliderX.style['-webkit-transition-duration'] = '.2s';
-          sliderX.style.webkitTransform = 'translate3d(' + offsetX + 'px,0px,0px)';
+          //sliderX.style.webkitTransform = 'translate3d(' + offsetX + 'px,0px,0px)';
+          sliderX.style.transform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          sliderX.style.webkitTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          sliderX.style.MozTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          sliderX.style.msTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          sliderX.style.OTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';           
           //sliderX.parentNode.dispatchEvent(e);          
         }
 
