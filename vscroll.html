@@ -184,6 +184,9 @@ $(function() {
       var onTouchStart = function (e) {
         //console.log("Touch Start");
         var el = e.target ? e.target.nodeType === 3 ? e.target.parentNode : e.target : e.srcElement;
+        document.getElementById("testAndroid").innerHTML = el.tagName; 
+        document.getElementById("testAndroid").innerHTML += ' ';   
+
         slider = getSlider(el);
         sliderX = getSliderX(el);
 
@@ -217,11 +220,13 @@ $(function() {
 
 
         //console.log('pageY: '+ pageY);
+
         deltaX = e.touches[0].pageX - pageX;
         deltaY = e.touches[0].pageY - pageY;
         pageX  = e.touches[0].pageX;
         pageY  = e.touches[0].pageY;
-
+        document.getElementById("testAndroid").innerHTML += deltaX;   
+        document.getElementById("testAndroid").innerHTML += ' ';   
         //console.log('deltaY: '+ deltaY);
         //console.log('pageY: '+ pageY);
 
@@ -305,7 +310,7 @@ $(function() {
           slider.style.OTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';
 
           //
-          document.getElementById("testAndroid").innerHTML = slider.style[2];                
+          //document.getElementById("testAndroid").innerHTML = slider.style[2];                
 
           e = new CustomEvent('slide', {
             detail: { slideNumber: Math.abs(slideNumber) },
