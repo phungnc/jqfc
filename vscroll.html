@@ -11,7 +11,8 @@
       left: -1px;
       max-height: 100%;
       background-color: #ccc; 
-      top: 15%;          
+      top: 15%;
+      bottom: 5%;          
     }
     #slideDoorOpen {
       position: absolute;
@@ -40,7 +41,9 @@
     #slideWrapper {}
     #slideDoorContent {
       overflow: hidden;
-      bottom: 20px;
+      bottom: 2px;
+      position: absolute;
+      top: 101px;
     }
     #title {
       line-height: 100px;
@@ -175,11 +178,12 @@ $(function() {
         //console.log('slideNumber 3: ' + slideNumber);
         slideNumber = Math.max(-(slider.children.length - 1), slideNumber);
         console.log('slideNumber 4: ' + slideNumber);
+        slideNumber = slideNumber < lastSlide ? lastSlide : slideNumber;
       }
       var toggleSlide = function () {
         toggleFlag = Math.round(getScrollX() / sliderWidth );
         toggleFlag = toggleFlag > 0 ? 0 : (toggleFlag < -1 ? -1 : toggleFlag); 
-        console.log('toggleFlag: ', toggleFlag);    
+        //console.log('toggleFlag: ', toggleFlag);    
       }
       var onTouchStart = function (e) {
         //console.log("Touch Start");
@@ -196,7 +200,8 @@ $(function() {
           var firstItem  = slider.querySelector('li');
           scrollableArea = firstItem.offsetHeight * slider.children.length;
           sliderHeight   = firstItem.offsetHeight;
-          lastSlide      = -(slider.children.length - 1);          
+          //lastSlide      = -(slider.children.length - 1);          
+          lastSlide      = -(slider.children.length - (Math.round($("#slideDoorContent").height()/sliderHeight)) + 1 );          
           slider.style['-webkit-transition-duration'] = 0;
           setSlideNumber(0);
         }
@@ -225,7 +230,7 @@ $(function() {
         deltaY = e.touches[0].pageY - pageY;
         pageX  = e.touches[0].pageX;
         pageY  = e.touches[0].pageY;
-        document.getElementById("testAndroid").innerHTML += deltaX;   
+        document.getElementById("testAndroid").innerHTML += deltaY;   
         document.getElementById("testAndroid").innerHTML += ' ';   
         //console.log('deltaY: '+ deltaY);
         //console.log('pageY: '+ pageY);
@@ -341,7 +346,7 @@ $(function() {
 });
 </script>
   </head>
-  <body class="modal-open">
+  <body>
   <div id="mobile-content">
     <div id="testAndroid"></div>
     <div id="slideDoor">
