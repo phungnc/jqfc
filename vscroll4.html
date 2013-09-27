@@ -1,0 +1,679 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>SlideOut</title>
+  <style type="text/css">
+    #slideDoor {
+      position: fixed;
+      width: 100%;
+      border: 1px solid #999;
+      left: -1px;
+      max-height: 100%;
+      background-color: #ccc; 
+      top: 15%;
+      bottom: 5%;          
+    }
+    #slideDoorOpen {
+      position: absolute;
+      width: 12%;
+      height: 30%;
+      top: 45px;
+      right: -12%;
+      background-color: #999;
+      cursor: pointer;
+      text-align: center;
+      line-height: 150PX;
+      font-size: 60px;
+      color: white;
+    }
+    #slideDoorClose {
+      position: absolute;
+      border: none;
+      top: 3px;
+      right: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      padding: 20;
+      font-size: 40px;
+      background-color: red;
+    }
+    #slideWrapper {}
+    #slideDoorContent {
+      overflow: hidden;
+      bottom: 2px;
+      position: absolute;
+      top: 101px;
+    }
+    #title {
+      line-height: 100px;
+      text-align: center;
+      background-color: #36231C;
+      color: white;
+      font-size: 50px;      
+    }
+    #slideDoorContent {
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      width: 100%;
+      -webkit-transform: translateZ(0);
+      -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      -o-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-text-size-adjust: none;
+      -moz-text-size-adjust: none;
+      -ms-text-size-adjust: none;
+      -o-text-size-adjust: none;
+      text-size-adjust: none;
+
+    }
+    #slideDoorContent ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      text-align: left;
+    }
+
+    #slideDoorContent ul li {
+      padding: 0 10px;
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 1px solid #ccc;
+      border-top: 1px solid #fff;
+      background-color: #fafafa;
+      font-size: 14px;
+    }
+
+    .modal-open {
+      overflow: hidden;
+    }
+    #testAndroid{
+      height: 12%;
+      width: 100%;
+      background-color: white;
+      position: fixed;
+      top: 2px;
+      left: 0px;
+      border: 2px solid #aaa;
+      display: none;
+    }
+  </style>    
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="fingerblast.js"></script>
+<script type="text/javascript">
+
+$(function() {
+
+    //if (!eventListeners) addEventListeners();
+    //$('#slideDoor').css('transform','translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)');
+    $('#slideDoor').css('webkitTransform','translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)');
+    //$('#slideDoor').css('MozTransform','translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)');
+    //$('#slideDoor').css('msTransform','translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)');
+    //$('#slideDoor').css('OTransform','translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)');
+
+    $(window).on('load', function () {
+      
+      //new FingerBlast('#mobile-content'); 
+    });
+
+    !function () {
+
+      var pageX;
+      var pageY;
+      var slider;
+      var sliderX;
+      var deltaX;
+      var deltaY;
+      var offsetX;
+      var offsetY;
+      var lastSlide;
+      var startTime;
+      var resistance;
+      var sliderWidth;
+
+      var sliderHeight;
+      var slideNumber;
+      var isScrolling;
+      var scrollableArea;
+      var toggleFlag;
+
+      var getSlider = function (target) {
+        var i, sliders = document.querySelectorAll('#slideDoorContent ul');
+        for (; target && target !== document; target = target.parentNode) {
+          for (i = sliders.length; i--;) { if (sliders[i] === target) return target; }
+        }
+      }
+      var getSliderX = function (target) {
+        var i, sliderX = document.querySelectorAll('#slideDoor');
+        for (; target && target !== document; target = target.parentNode) {
+          for (i = sliderX.length; i--;) { if (sliderX[i] === target) return target; }
+        }
+      }
+      var getScroll = function () {
+        if(typeof slider !== 'undefined') {
+          var matrix = new WebKitCSSMatrix(slider.style.webkitTransform);
+          return parseInt(matrix.f);          
+        } else {
+          return 0;
+        }
+
+      };
+      var getScrollX = function () {
+        var matrix = new WebKitCSSMatrix(sliderX.style.webkitTransform);
+        return parseInt(matrix.e);
+      };
+      var setSlideNumber = function (offset) {
+        //var round = offset ? (deltaX < 0 ? 'ceil' : 'floor') : 'round';
+        var round = offset ? (deltaY < 0 ? 'ceil' : 'floor') : 'round';
+        slideNumber = Math[round](getScroll() / ( scrollableArea / slider.children.length) );
+        console.log('slideNumber 1: ' + slideNumber);
+        slideNumber += offset;
+        console.log('slideNumber 2: ' + slideNumber);
+        slideNumber = Math.min(slideNumber, 0);
+        //console.log('slideNumber 3: ' + slideNumber);
+        slideNumber = Math.max(-(slider.children.length - 1), slideNumber);
+        console.log('slideNumber 4: ' + slideNumber);
+        slideNumber = slideNumber < lastSlide ? lastSlide : slideNumber;
+      }
+      var toggleSlide = function () {
+        toggleFlag = Math.round(getScrollX() / sliderWidth );
+        toggleFlag = toggleFlag > 0 ? 0 : (toggleFlag < -1 ? -1 : toggleFlag); 
+        //console.log('toggleFlag: ', toggleFlag);    
+      }
+      var onTouchStart = function (e) {
+        e.preventDefault();
+        //console.log("Touch Start");
+        //var el = e.target ? e.target.nodeType === 3 ? e.target.parentNode : e.target : e.srcElement;
+        var point = e.touches ? e.touches[0] : e;
+        document.getElementById("testAndroid").innerHTML = el.tagName; 
+        document.getElementById("testAndroid").innerHTML += ' ';   
+
+        slider = getSlider(el);
+        sliderX = getSliderX(el);
+
+        if (!slider && !sliderX) return;
+
+        if(slider) {
+          var firstItem  = slider.querySelector('li');
+          scrollableArea = firstItem.offsetHeight * slider.children.length;
+          sliderHeight   = firstItem.offsetHeight;
+          //lastSlide      = -(slider.children.length - 1);          
+          lastSlide      = -(slider.children.length - (Math.round($("#slideDoorContent").height()/sliderHeight)));          
+          slider.style['-webkit-transition-duration'] = 0;
+          setSlideNumber(0);
+        }
+
+        //scrollableArea = firstItem.offsetWidth * slider.children.length;
+        
+        isScrolling    = undefined;
+        sliderWidth    = sliderX.offsetWidth;        
+        resistance     = 1;
+        startTime      = +new Date;
+        //pageX          = e.touches[0].pageX;
+        //pageY          = e.touches[0].pageY;
+
+        pageX          = point.pageX;
+        pageY          = point.pageY;
+        
+        sliderX.style['-webkit-transition-duration'] = 0;
+      };
+
+      var onTouchMove = function (e) {
+        e.preventDefault();
+        var point = e.touches ? e.touches[0] : e;
+        //console.log("Touch Move");
+        //if (e.touches.length > 1 || !slider && !sliderX) return; // Exit if a pinch || no slider
+        if ( !slider && !sliderX) return; // Exit if a pinch || no slider
+
+
+        //console.log('pageY: '+ pageY);
+
+        //deltaX = e.touches[0].pageX - pageX;
+        //deltaY = e.touches[0].pageY - pageY;
+        //pageX  = e.touches[0].pageX;
+        //pageY  = e.touches[0].pageY;
+
+        deltaX = point.pageX - pageX;
+        deltaY = point.pageY - pageY;
+        pageX  = point.pageX;
+        pageY  = point.pageY;
+
+        
+        document.getElementById("testAndroid").innerHTML += point.pageY;   
+        document.getElementById("testAndroid").innerHTML += ' ';   
+        document.getElementById("testAndroid").innerHTML += deltaY;   
+        document.getElementById("testAndroid").innerHTML += ' ';   
+        //console.log('deltaY: '+ deltaY);
+        //console.log('pageY: '+ pageY);
+
+        if (typeof isScrolling == 'undefined') {
+          isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
+          //isScrolling = Math.abs(deltaX) > Math.abs(deltaY);
+        }
+        //console.log('isScrolling', isScrolling);
+        //if (isScrolling) return;
+        if (isScrolling) {
+          offsetY = (deltaY / resistance) + getScroll();
+          //slider.style.webkitTransform = 'translate3d(0px,' + offsetY + 'px,0px)';   
+          //slider.style.transform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          slider.style.webkitTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          //slider.style.MozTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          //slider.style.msTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          //slider.style.OTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)'; 
+
+        } else {
+          offsetX = (deltaX / resistance) + getScrollX();
+          //sliderX.style.webkitTransform = 'translate3d(' + offsetX + 'px,0px,0px)';
+          //sliderX.style.transform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          sliderX.style.webkitTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          //sliderX.style.MozTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          //sliderX.style.msTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          //sliderX.style.OTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                     
+        }
+        //console.log('offsetY: '+ offsetY);
+        //e.preventDefault();
+        if(isScrolling) {
+          resistance = slideNumber == 0         && deltaY > 0 ? (pageY / sliderHeight) + 1.25 :
+                       slideNumber == lastSlide && deltaY < 0 ? (Math.abs(pageY) / sliderHeight) + 1.25 : 1;
+        } else {
+          resistance = toggleFlag == 0         && deltaX > 0 ? (pageX / sliderWidth) + 1.5 :
+                       toggleFlag == -1 && deltaX < 0 ? (Math.abs(pageX) / sliderWidth) + 1.25 : 1;
+        }
+        //resistance = slideNumber == 0         && deltaX > 0 ? (pageX / sliderWidth) + 1.25 :
+        //             slideNumber == lastSlide && deltaX < 0 ? (Math.abs(pageX) / sliderWidth) + 1.25 : 1;
+
+        //slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+        //slider.style.webkitTransform = 'translate3d(0px,' + offsetY + 'px,0px)';
+        console.log('resistance: ' + resistance);
+      };
+
+      var onTouchEnd = function (e) {
+        //console.log("Touch End");
+        if (!slider && !sliderX) return;
+
+        if(e.target.id === "slideDoorClose") {
+          sliderX.style['-webkit-transition-duration'] = '.2s';
+          sliderX.style.webkitTransform = 'translate(' + (0-sliderWidth) + 'px,0px)' + ' translateZ(0)';
+          return;
+        }
+        //console.log('isScrolling: '+ isScrolling);
+        if(isScrolling) {
+          setSlideNumber(
+            //(+new Date) - startTime < 1000 && Math.abs(deltaX) > 15 ? (deltaX < 0 ? -1 : 1) : 0
+            (+new Date) - startTime < 1000 && Math.abs(deltaY) > 15 ? (deltaY < 0 ? -1 : 1) : 0
+          );          
+          offsetY = slideNumber * sliderHeight;
+        } else {
+          toggleSlide();
+          offsetX = toggleFlag * sliderWidth;          
+        }
+
+        //console.log(slideNumber);
+        //slideNumber = slideNumber < -1 ? -1 : slideNumber; 
+
+        //offsetX =  sliderWidth;
+
+        
+        //slider.style.webkitTransform = 'translate3d(' + offsetX + 'px,0,0)';
+        if(isScrolling) {
+          slider.style['-webkit-transition-duration'] = '.2s';
+          //slider.style.webkitTransform = 'translate3d(0px,' + offsetY + 'px,0px)';
+
+          //slider.style.transform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          slider.style.webkitTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          //slider.style.MozTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          //slider.style.msTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';                 
+          //slider.style.OTransform = 'translate(0px,' + offsetY + 'px)' + ' translateZ(0)';
+
+          //
+          //document.getElementById("testAndroid").innerHTML = slider.style[2];                
+
+          e = new CustomEvent('slide', {
+            detail: { slideNumber: Math.abs(slideNumber) },
+            bubbles: true,
+            cancelable: true
+          });
+          slider.parentNode.dispatchEvent(e);
+        } else {
+          sliderX.style['-webkit-transition-duration'] = '.2s';
+          //sliderX.style.webkitTransform = 'translate3d(' + offsetX + 'px,0px,0px)';
+          //sliderX.style.transform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          sliderX.style.webkitTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          //sliderX.style.MozTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          //sliderX.style.msTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';                 
+          //sliderX.style.OTransform = 'translate(' + offsetX + 'px,0px)' + ' translateZ(0)';           
+          //sliderX.parentNode.dispatchEvent(e);          
+        }
+
+
+        
+      };
+
+      window.addEventListener('touchstart', onTouchStart);
+      window.addEventListener('touchmove', onTouchMove);
+      window.addEventListener('touchend', onTouchEnd);
+
+    }();
+});
+</script>
+  </head>
+  <body class="modal-open">
+  <div id="mobile-content">
+    <div id="testAndroid"></div>
+    <div id="slideDoor">
+      <div id="slideDoorOpen">>></div>
+      <div id="title">お知らせ</div>
+      <div id="slideDoorClose">[X]</div>
+      <div id="slideWrapper">
+        <div id="slideDoorContent">
+            <ul>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/2PM">2PM</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AAA">AAA</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Acid%20Black%20Cherry">Acid Black Cherry</a>
+              <span dir="ltr">(3)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AI">AI</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AK-69">AK-69</a>
+              <span dir="ltr">(10)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AKB48">AKB48</a>
+              <span dir="ltr">(13)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Angela%20Aki">Angela Aki</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Arashi">Arashi</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka">Ayaka</a>
+              <span dir="ltr">(7)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka%20Hirahara">Ayaka Hirahara</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BENNIE%20K">BENNIE K</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BIGBANG">BIGBANG</a>
+              <span dir="ltr">(13)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BUMP%20OF%20CHICKEN">BUMP OF CHICKEN</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Che%27Nelle">Che'Nelle</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/CHEHON">CHEHON</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Chihiro%20Onitsuka">Chihiro Onitsuka</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Dreams%20Come%20True">Dreams Come True</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/ET-KING">ET-KING</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/EXILE">EXILE</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Fukuyama%20Masaharu">Fukuyama Masaharu</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/2PM">2PM</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AAA">AAA</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Acid%20Black%20Cherry">Acid Black Cherry</a>
+              <span dir="ltr">(3)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AI">AI</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AK-69">AK-69</a>
+              <span dir="ltr">(10)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/AKB48">AKB48</a>
+              <span dir="ltr">(13)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Angela%20Aki">Angela Aki</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Arashi">Arashi</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka">Ayaka</a>
+              <span dir="ltr">(7)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Ayaka%20Hirahara">Ayaka Hirahara</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BENNIE%20K">BENNIE K</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BIGBANG">BIGBANG</a>
+              <span dir="ltr">(13)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/BUMP%20OF%20CHICKEN">BUMP OF CHICKEN</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Che%27Nelle">Che'Nelle</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/CHEHON">CHEHON</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Chihiro%20Onitsuka">Chihiro Onitsuka</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Dreams%20Come%20True">Dreams Come True</a>
+              <span dir="ltr">(2)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/ET-KING">ET-KING</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/EXILE">EXILE</a>
+              <span dir="ltr">(1)</span>
+              </li>
+              <li>
+              <a dir="ltr" href="http://jmusictube.blogspot.com/search/label/Fukuyama%20Masaharu">Fukuyama Masaharu</a>
+              <span dir="ltr">(2)</span>
+              </li>          
+            </ul>      
+        </div>
+      </div>
+    </div>
+    <div id="mainContent">
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+        Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod.
+
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+        Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.        
+      </p>            
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+        Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod.
+
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+        Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.        
+      </p> 
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+        Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod.
+
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+        Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.        
+      </p> 
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+        Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod.
+
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+        Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.        
+      </p> 
+      <p>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+
+        Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+        Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod.
+
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+
+        Curabitur blandit tempus porttitor. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui.
+
+        Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.        
+      </p>                   
+    </div>  
+  </div>
+  </body>
+</html>
