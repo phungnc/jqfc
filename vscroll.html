@@ -230,6 +230,9 @@ $(function() {
         deltaY = e.touches[0].pageY - pageY;
         pageX  = e.touches[0].pageX;
         pageY  = e.touches[0].pageY;
+        
+        document.getElementById("testAndroid").innerHTML += e.touches[0].pageY;   
+        document.getElementById("testAndroid").innerHTML += ' ';   
         document.getElementById("testAndroid").innerHTML += deltaY;   
         document.getElementById("testAndroid").innerHTML += ' ';   
         //console.log('deltaY: '+ deltaY);
