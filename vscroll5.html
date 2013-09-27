@@ -189,7 +189,7 @@ $(function() {
       var onTouchStart = function (e) {
         e.preventDefault();
         //console.log("Touch Start");
-        //var el = e.target ? e.target.nodeType === 3 ? e.target.parentNode : e.target : e.srcElement;
+        var el = e.target ? e.target.nodeType === 3 ? e.target.parentNode : e.target : e.srcElement;
         var point = e.touches ? e.touches[0] : e;
         document.getElementById("testAndroid").innerHTML = el.tagName; 
         document.getElementById("testAndroid").innerHTML += ' ';   
