@@ -201,7 +201,7 @@ $(function() {
           scrollableArea = firstItem.offsetHeight * slider.children.length;
           sliderHeight   = firstItem.offsetHeight;
           //lastSlide      = -(slider.children.length - 1);          
-          lastSlide      = -(slider.children.length - (Math.round($("#slideDoorContent").height()/sliderHeight)) + 1 );          
+          lastSlide      = -(slider.children.length - (Math.round($("#slideDoorContent").height()/sliderHeight)));          
           slider.style['-webkit-transition-duration'] = 0;
           setSlideNumber(0);
         }
