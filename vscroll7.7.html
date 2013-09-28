@@ -104,10 +104,10 @@
       top: 2px;
       left: 0px;
       border: 2px solid #aaa;
-      display: none;
+      /*display: none;*/
     }
   </style>    
-<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<!--script src="http://code.jquery.com/jquery-1.7.2.min.js"></script-->
 <script type="text/javascript">
 
 function listenOn(obj, type, ctx) {
@@ -166,7 +166,7 @@ Scroll.prototype = {
     // init event
     listenOn(window, 'touchstart', this);
     //document.getElementById("testAndroid").innerHTML = 'version: 7.1'; 
-    document.getElementById("title").innerHTML = 'version: 7.7'; 
+    document.getElementById("title").innerHTML = 'version: 7.7.1'; 
   },
   //destroy: function() {},
   getPos: function () {
@@ -631,6 +631,7 @@ console.log('offsetX: ' + offsetX);
       var slideDoor = document.querySelector("#slideDoor");
 
       slideDoor.style.webkitTransform = 'translate(' + (0 - slideDoor.offsetWidth) + 'px,0px)' + ' translateZ(0)';
+      document.getElementById('testAndroid').innerHTML = (0 - slideDoor.offsetWidth);
       //var tapTripVerticalScroll = new Scroll('#slideWrapper',{swipe:false});
 
     };
