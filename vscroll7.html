@@ -152,11 +152,7 @@ Scroll.prototype = {
 
   initialize: function() {
     // init event
-    listenOn(window, 'touchstart', this);
-    //window.addEventListener('mousedown', onTouchStart);
-    //window.addEventListener('mousemove', onTouchMove);
-    //window.addEventListener('mouseup', onTouchEnd);    
-
+    listenOn(window, 'touchstart', this);   
   },
   destroy: function() {
 
@@ -221,17 +217,17 @@ Scroll.prototype = {
   handleEvent: function (e) {
     switch (e.type) {
       case 'touchstart':
-      case 'mousedown':
+      //case 'mousedown':
         this.onStart(e);
         break;
       case 'touchmove':
-      case 'mousemove':
+      //case 'mousemove':
         this.onMove(e);
         break;
       case 'touchend':
-      case 'mouseup':
+      //case 'mouseup':
       case 'touchcancel':
-      case 'mousecancel':
+      //case 'mousecancel':
         this.onEnd(e);
         break;              
     }
