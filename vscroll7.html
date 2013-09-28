@@ -133,8 +133,10 @@ var Scroll = function (el, options) {
     //resistanceK: 1
   }
    
-  var pageX, pageY;
-
+  var wrapperHeight, scrollerHeight;
+  wrapperHeight = this.wrapper.offsetHeight;
+  scrollerHeight = this.scroller.offsetHeight;
+  this.maxHeight =  wrapperHeight - scrollerHeight;
 
 
   for ( var i in options ) {
@@ -178,7 +180,9 @@ Scroll.prototype = {
     //e.stopPropagation();
 
     this.pageY = point.pageY;
-    //
+    // 
+    this.scroller.style['-webkit-transition-duration'] = 0;
+    // start listent to touchmove and touchend event
     listenOn(window, 'touchmove', this);
     listenOn(window, 'touchend', this);    
     console.log(this.pageY);     
@@ -191,19 +195,28 @@ Scroll.prototype = {
     //console.log('this.pageY: ' + this.pageY);
     var deltaY = point.pageY - this.pageY;
 
-    var pos = this.getPos();
-
+    var pos = this.getPos(), offsetY = deltaY + parseInt(pos.y);
     this.pageY  = point.pageY;
     console.log('deltaY :' +deltaY);
     console.log('pos :' + parseInt(pos.y));
-    offsetY = deltaY + parseInt(pos.y);
-
     this.scroller.style.webkitTransform = 'translate(0px,' + offsetY + 'px)' + this.translateZ;
 
   },
   onEnd: function(e) {
     console.log("scroll onEnd");
-    //this.scroller.style.webkitTransform = 'translate(0px,' + offsetY + 'px)' + this.translateZ;    
+    //
+    var pos = this.getPos(), offsetY;
+    console.log('pos.X: ' + pos.x);
+    console.log('pos.Y: ' + pos.y);
+    if(pos.y > 0) {
+      offsetY = pos.y > 0 ? 0: pos.y;
+    } else if( pos.y < this.maxHeight) {
+      offsetY = pos.y < this.maxHeight ? this.maxHeight : pos.y;
+    }
+    //var offsetY = parpos.y);
+    //
+    this.scroller.style['-webkit-transition-duration'] = '.2s';
+    this.scroller.style.webkitTransform = 'translate(0px,' + offsetY + 'px)' + this.translateZ;    
   },
   handleEvent: function (e) {
     switch (e.type) {
