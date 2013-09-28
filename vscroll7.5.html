@@ -628,7 +628,7 @@ console.log('offsetX: ' + offsetX);
       window.onload = function() {
       
       var tapTripHorizontalScroll = new Scroll('#slideDoor');
-      document.getElementById("slideDoor").style.webkitTransform = 'translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)';
+      document.querySelector("#slideDoor").style.webkitTransform = 'translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)';
       //var tapTripVerticalScroll = new Scroll('#slideWrapper',{swipe:false});
 
     };
