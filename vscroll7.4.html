@@ -130,13 +130,13 @@ var Scroll = function (el, options) {
     scrollX: true,
     swipe: true,
     stepSize: 5,
-    //resistanceK: 1
+    resistance: 1,
+    resistanceK: 1.5,
   }
   for ( var i in options ) {
     this.options[i] = options[i];
   }
   var wrapperHeight, scrollerHeight;
-
 
   this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
   // get wrapper height, width
@@ -154,7 +154,7 @@ var Scroll = function (el, options) {
     this.maxHeight  =  wrapperHeight - scrollerHeight;
     this.maxWidth   =  wrapperWidth - scrollerWidth;       
   }
-
+  this.lastStepNumberY = (this.maxHeight / this.options.stepSize);
   this.translateZ = ' translateZ(0)';
   this.initialize();
 }
@@ -180,21 +180,27 @@ Scroll.prototype = {
 
     var offsetX = (+new Date) - this.startTime < 1000 && Math.abs(deltaX) > 15 ? (deltaX < 0 ? -1 : 1) : 0;
     var offsetY = (+new Date) - this.startTime < 1000 && Math.abs(deltaY) > 15 ? (deltaY < 0 ? -1 : 1) : 0;
+    //
     var round = offsetX ? (deltaX < 0 ? 'ceil' : 'floor') : 'round';
     var round = offsetY ? (deltaY < 0 ? 'ceil' : 'floor') : 'round';
+    //
     var stepNumberX = this.scroller.offsetWidth / this.options.stepSize;
-    var stepNumberY = this.scroller.offsetHeight / this.options.stepSize;
-    var lastStepNumberY = (this.maxHeight / this.options.stepSize);
+    var stepNumberY = this.scroller.offsetHeight / this.options.stepSize; 
+    //
     var stepX  = Math[round](this.getPos().x / this.options.stepSize );
     var stepY  = Math[round](this.getPos().y / this.options.stepSize );
+    //
     stepX += offsetX;
     stepY += offsetY;
+    //
     stepX = Math.min(stepX,0);
     stepY = Math.min(stepY,0);
-
+    //
     stepX = Math.max(-(stepNumberX - 1), stepX);
     stepY = Math.max(-(stepNumberY - 1), stepY);
-    stepY = stepY < lastStepNumberY ? lastStepNumberY : stepY;
+    //
+    stepY = stepY < this.lastStepNumberY ? this.lastStepNumberY : stepY;
+    
     var offsetX = stepX * this.options.stepSize;
     var offsetY = stepY * this.options.stepSize;
     this.translateTo(offsetX,offsetY);
@@ -213,24 +219,41 @@ Scroll.prototype = {
     this.scroller.style['-webkit-transition-duration'] = 0;
     // start listent to touchmove and touchend event
     listenOn(window, 'touchmove', this);
-    listenOn(window, 'touchend', this);    
-    console.log(this.pageX);     
+    listenOn(window, 'touchend', this);
+    this.options.resistanceX = 1;    
+    this.options.resistanceY = 1;    
+    //console.log(this.pageX);     
   },
   onMove: function(e) {
-    console.log("scroll onMove");
+    //console.log("scroll onMove");
     e.preventDefault();
     e.stopPropagation();
     var point = e.touches ? e.touches[0] : e;
     var deltaX = point.pageX - this.pageX;
     var deltaY = point.pageY - this.pageY;
+console.log('resistanceX: ' + this.options.resistanceX);
+console.log('deltaX: ' + deltaX);
+console.log('deltaY: ' + deltaY);
 
-    var pos = this.getPos(), offsetX = deltaX + parseInt(pos.x), offsetY = deltaY + parseInt(pos.y);
+    var pos = this.getPos(), 
+        offsetX = deltaX/this.options.resistanceX + parseInt(pos.x), 
+        offsetY = deltaY/this.options.resistanceY + parseInt(pos.y);
+
+console.log('offsetX: ' + offsetX);
+
     this.pageX  = point.pageX;
     this.pageY  = point.pageY;
-    console.log('deltaX :' +deltaX);
-    console.log('pos :' + parseInt(pos.x));
+   // console.log('deltaX :' +deltaX);
+//    console.log('posY :' + parseInt(pos.y));
+//    console.log('this.pageY :' + this.pageY);
     //
     this.translateTo(offsetX, offsetY);
+
+    this.options.resistanceX = pos.x > 0 ? (this.pageX / this.options.stepSize) + this.options.resistanceK :
+                  pos.x < this.maxWidth ? (Math.abs(this.pageX) / this.options.stepSize) + this.options.resistanceK : 1;
+
+    this.options.resistanceY = pos.y > 0 ? (this.pageY / this.options.stepSize) + this.options.resistanceK :
+                 pos.y < this.maxHeight ? (Math.abs(this.pageY) / this.options.stepSize) + this.options.resistanceK : 1;
   },
   onEnd: function(e) {
     console.log("scroll onEnd");
@@ -242,8 +265,8 @@ Scroll.prototype = {
     this.scroller.style['-webkit-transition-duration'] = '.2s';
     offsetX = deltaX + parseInt(pos.x);
     offsetY = deltaY + parseInt(pos.y);
-    console.log('translate to offsetX: ' + offsetX);
-    console.log('translate to offsetY: ' + offsetY);
+//    console.log('translate to offsetX: ' + offsetX);
+//    console.log('translate to offsetY: ' + offsetY);
     this.setStep(deltaX,deltaY);
   },
   // 
@@ -265,7 +288,7 @@ Scroll.prototype = {
   },
   translateTo: function (offsetX, offsetY) {
     this.scroller.style.webkitTransform = 'translate(' + offsetX + 'px,0px)' + this.translateZ;    
-    this.scroller.style.webkitTransform = 'translate(0px,' + offsetY + 'px)' + this.translateZ;   
+    //this.scroller.style.webkitTransform = 'translate(0px,' + offsetY + 'px)' + this.translateZ;   
   },
   handleEvent: function (e) {
     switch (e.type) {
@@ -604,8 +627,9 @@ Scroll.prototype = {
   <script type="text/javascript">
       window.onload = function() {
       
-      //var tapTripHorizontalScroll = new Scroll('#slideDoor');
-      var tapTripVerticalScroll = new Scroll('#slideWrapper',{swipe:false});
+      var tapTripHorizontalScroll = new Scroll('#slideDoor');
+      document.getElementById("slideDoor").style.webkitTransform = 'translate(' + (0 - $('#slideDoor').width()) + 'px,0px)' + ' translateZ(0)';
+      //var tapTripVerticalScroll = new Scroll('#slideWrapper',{swipe:false});
 
     };
 
