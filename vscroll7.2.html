@@ -186,7 +186,8 @@ Scroll.prototype = {
   },
   onMove: function(e) {
     console.log("scroll onMove");
-    //e.preventDefault();
+    e.preventDefault();
+    e.stopPropagation();
     var point = e.touches ? e.touches[0] : e;
     //console.log('point.pageY: ' + point.pageY);
     //console.log('this.pageY: ' + this.pageY);
