@@ -153,7 +153,7 @@ Scroll.prototype = {
     // init event
     listenOn(window, 'touchstart', this);
     //document.getElementById("testAndroid").innerHTML = 'version: 7.1'; 
-    document.getElementById("title").innerHTML = 'version: 7.1'; 
+    document.getElementById("title").innerHTML = 'version: 7.2'; 
   },
   destroy: function() {
 
@@ -186,7 +186,7 @@ Scroll.prototype = {
   },
   onMove: function(e) {
     console.log("scroll onMove");
-    e.preventDefault();
+    //e.preventDefault();
     var point = e.touches ? e.touches[0] : e;
     //console.log('point.pageY: ' + point.pageY);
     //console.log('this.pageY: ' + this.pageY);
